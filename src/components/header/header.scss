@@ -1,4 +1,4 @@
-@import '../../styles/variables';
+@import '../../styles//variables';
 
 .header {
   display: flex;
@@ -6,8 +6,29 @@
   padding: 16px 0;
   background-color: $black;
 
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .logo {
+      color: #fff;
+
+    }
+    a {
+      color: #fff;
+    }
+    .header-menu {
+      display: flex;
+      align-items: center;
+      li {
+        margin-right: 32px;
+      }
+    }
+  }
+
   .logo {
     width: 120px;
+    margin-right: 100px;
     img {
       width: 100%;
       height: auto;
