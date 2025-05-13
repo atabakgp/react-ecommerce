@@ -3,6 +3,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { registerUser } from "../../services/authServices";
 import { useState } from "react";
+import { useUser } from "../../context/UserContext";
 
 type Register = {
   name: string;
@@ -16,7 +17,9 @@ function Register() {
     handleSubmit,
     formState: { errors },
   } = useForm<Register>();
+
   const [error, setError] = useState("");
+  const { setUser } = useUser();
 
   const navigate = useNavigate();
 
@@ -28,9 +31,17 @@ function Register() {
         data.name
       );
 
-      console.log("User registered:", userCredential.user);
-      // Store user or token info if needed
-      localStorage.setItem("user", JSON.stringify(userCredential.user));
+      const firebaseUser = userCredential.user;
+      const accessToken = await firebaseUser.getIdToken();
+      const email = firebaseUser.email;
+      const displayName = firebaseUser.displayName
+
+      setUser({
+        email,
+        displayName,
+        accessToken,
+      });
+      localStorage.setItem("user", JSON.stringify({ email, displayName, accessToken }));
 
       navigate("/dashboard");
     } catch (error: any) {
