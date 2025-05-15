@@ -41,7 +41,8 @@ function Register() {
         displayName,
         accessToken,
       });
-      localStorage.setItem("user", JSON.stringify({ email, displayName, accessToken }));
+      localStorage.setItem("accessToken", accessToken);
+
 
       navigate("/dashboard");
     } catch (error: any) {

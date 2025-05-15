@@ -1,36 +1,51 @@
 // src/pages/Login/Login.tsx
-import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { useForm, SubmitHandler } from 'react-hook-form'
-import { loginUser } from '../../services/authServices'
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { loginUser } from "../../services/authServices";
+import { useUser } from "../../context/UserContext";
 
 type Login = {
-  email: string
-  password: string
-}
+  email: string;
+  password: string;
+};
 
 function Login() {
-  const [error, setError] = useState('')
-  const { register, handleSubmit, formState: { errors } } = useForm<Login>()
-  const navigate = useNavigate()
+  const [error, setError] = useState("");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Login>();
+  const { setUser } = useUser();
+  const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<Login> = async (data) => {
     try {
-      const userCredential = await loginUser(data.email, data.password)
-      console.log('User logged in:', userCredential.user)
-      // Store user or token info if needed
-      localStorage.setItem('user', JSON.stringify(userCredential.user))
+      const userCredential = await loginUser(data.email, data.password);
 
-      navigate('/dashboard')
+      const firebaseUser = userCredential.user;
+      const accessToken = await firebaseUser.getIdToken();
+      const email = firebaseUser.email;
+      const displayName = firebaseUser.displayName;
+
+      setUser({
+        email,
+        displayName,
+        accessToken,
+      });
+      localStorage.setItem("accessToken", accessToken);
+      navigate("/dashboard");
+      
     } catch (error: any) {
-      console.error('Firebase login error:', error)
+      console.error("Firebase login error:", error);
       setError(error.message);
-      console.error('Firebase login error:', error.message)
+      console.error("Firebase login error:", error.message);
     }
-  }
+  };
 
   return (
-    <div className="container mt-5" style={{ maxWidth: '400px' }}>
+    <div className="container mt-5" style={{ maxWidth: "400px" }}>
       <h2 className="mb-4">Login</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         {/* Display error message */}
@@ -41,8 +56,8 @@ function Login() {
           <label>Email address</label>
           <input
             type="email"
-            className={`form-control ${errors.email ? 'is-invalid' : ''}`}
-            {...register('email', { required: 'Email is required' })}
+            className={`form-control ${errors.email ? "is-invalid" : ""}`}
+            {...register("email", { required: "Email is required" })}
           />
           {errors.email && (
             <div className="invalid-feedback">{errors.email.message}</div>
@@ -54,8 +69,8 @@ function Login() {
           <label>Password</label>
           <input
             type="password"
-            className={`form-control ${errors.password ? 'is-invalid' : ''}`}
-            {...register('password', { required: 'Password is required' })}
+            className={`form-control ${errors.password ? "is-invalid" : ""}`}
+            {...register("password", { required: "Password is required" })}
           />
           {errors.password && (
             <div className="invalid-feedback">{errors.password.message}</div>
@@ -73,7 +88,7 @@ function Login() {
         </div>
       </form>
     </div>
-  )
+  );
 }
 
-export default Login
+export default Login;

@@ -9,9 +9,7 @@ function Header() {
     <header className="header">
       <div className="container">
         <div className="logo">
-          <Link to="/">
-            Website Logo
-          </Link>
+          <Link to="/">Website Logo</Link>
         </div>
         <ul className="header-menu">
           {!user ? (
@@ -24,9 +22,12 @@ function Header() {
               </li>
             </>
           ) : (
-            <li>
-              <Link to="/dashboard">{user.displayName}'s Dashboard</Link>
-            </li>
+            <>
+              <li>
+                <Link to="/dashboard">{user.displayName}'s Dashboard</Link>
+              </li>
+              <button className="logout" type="button">Logout</button>
+            </>
           )}
         </ul>
       </div>
