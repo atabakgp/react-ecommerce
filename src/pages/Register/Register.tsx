@@ -41,8 +41,6 @@ function Register() {
         displayName,
         accessToken,
       });
-      localStorage.setItem("accessToken", accessToken);
-
 
       navigate("/dashboard");
     } catch (error: any) {

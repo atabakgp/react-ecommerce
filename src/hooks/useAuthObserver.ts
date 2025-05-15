@@ -17,12 +17,10 @@ const useAuthObserver = () => {
             displayName: firebaseUser.displayName,
             accessToken: token,
           });
-          localStorage.setItem("accessToken", token);
           setLoading(false);
         });
       } else {
         setUser(null);
-        localStorage.removeItem("accessToken");
         setLoading(false);
       }
     });
