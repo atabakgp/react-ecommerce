@@ -1,4 +1,3 @@
-import { BooleanExpression } from "mongoose";
 import { createContext, useContext, useState, ReactNode } from "react";
 
 type UserProviderProps = {

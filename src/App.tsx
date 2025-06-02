@@ -6,19 +6,18 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import useAuthObserver from "./hooks/useAuthObserver";
 import { useUser } from "./context/UserContext";
 import Spinner from "./components/Spinner/Spinner";
+import { useLoading } from "./context/LoadingContext";
+
 
 
 
 function App() {
   useAuthObserver();
-  const { loading } = useUser();
-
-  if (loading) {
-    return <Spinner/>
-  }
+  const { loading } = useLoading();
 
   return (
     <div className="App">
+      {loading && <Spinner />}
       <Outlet />
     </div>
   );

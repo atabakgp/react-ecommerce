@@ -4,13 +4,14 @@ import { RouterProvider } from "react-router-dom";
 import { router } from "./routes/router";
 import "./index.css";
 import { UserProvider } from "./context/UserContext";
-import useAuthObserver from "./hooks/useAuthObserver";
-
+import { LoadingProvider } from "./context/LoadingContext";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <UserProvider>
-      <RouterProvider router={router} />
+      <LoadingProvider>
+        <RouterProvider router={router} />
+      </LoadingProvider>
     </UserProvider>
   </React.StrictMode>
 );

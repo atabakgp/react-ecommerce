@@ -1,9 +1,20 @@
 import "./Header.scss";
 import { Link } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
+import { useLoading } from "../../context/LoadingContext";
+import { logoutUser } from "../../services/authServices";
 
 function Header() {
-  const { user } = useUser();
+  const { user, setUser } = useUser();
+
+  const handleLogout = async () => {
+    try {
+      await logoutUser();
+      setUser(null);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <header className="header">
@@ -26,7 +37,9 @@ function Header() {
               <li>
                 <Link to="/dashboard">{user.displayName}'s Dashboard</Link>
               </li>
-              <button className="logout" type="button">Logout</button>
+              <button className="logout" type="button" onClick={handleLogout}>
+                Logout
+              </button>
             </>
           )}
         </ul>

@@ -1,12 +1,14 @@
-import React from "react";
-import "./Spinner.scss";
+// src/components/SpinnerOverlay/SpinnerOverlay.tsx
+import './Spinner.scss';
 
-const Spinner = () => {
+const SpinnerOverlay = () => {
   return (
     <div className="spinner-overlay">
-      <div className="spinner" />
+      <div className="spinner-border text-primary" role="status">
+        <span className="visually-hidden">Loading...</span>
+      </div>
     </div>
   );
 };
 
-export default Spinner;
+export default SpinnerOverlay;
