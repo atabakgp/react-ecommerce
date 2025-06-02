@@ -8,25 +8,29 @@ const useAuthObserver = () => {
 
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
-        console.log("observ", firebaseUser);
+    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
-        firebaseUser.getIdToken().then((token) => {
+        try {
+          const token = await firebaseUser.getIdToken();
           setUser({
             email: firebaseUser.email,
             displayName: firebaseUser.displayName,
             accessToken: token,
           });
+        } catch (error) {
+          console.error('Failed to get token:', error);
+        } finally {
           setLoading(false);
-        });
+        }
       } else {
         setUser(null);
         setLoading(false);
       }
     });
-
+  
     return () => unsubscribe();
-  }, [setUser]);
+  }, []);
+  
 };
 
 export default useAuthObserver;

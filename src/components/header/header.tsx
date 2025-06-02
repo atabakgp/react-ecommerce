@@ -35,7 +35,7 @@ function Header() {
           ) : (
             <>
               <li>
-                <Link to="/dashboard">{user.displayName}'s Dashboard</Link>
+                <Link to="/dashboard">{user.displayName}'s Profile</Link>
               </li>
               <button className="logout" type="button" onClick={handleLogout}>
                 Logout
