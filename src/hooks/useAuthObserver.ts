@@ -2,9 +2,13 @@ import { useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase/firebase";
 import { useUser } from "../context/UserContext";
+import { useLoading } from "../context/LoadingContext";
+
 
 const useAuthObserver = () => {
-  const { setUser, setLoading } = useUser();
+  const { setUser } = useUser();
+  const { setLoading } = useLoading();
+
 
 
   useEffect(() => {

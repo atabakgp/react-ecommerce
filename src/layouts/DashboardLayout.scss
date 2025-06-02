@@ -1,0 +1,21 @@
+.DashboardLayout {
+	padding-top: 16px;
+  .dashboard-nav {
+		background-color: #101010;
+		border-radius: 4px;
+		padding: 16px;
+    a {
+			display: block;
+			color: #fff;
+			margin-bottom: 8px;
+			padding: 4px 8px;
+			border-radius: 2px;
+			&:hover {
+				background-color: #FF6F61;
+			}
+			&.active {
+				background-color: #FF6F61;
+			}
+    }
+  }
+}

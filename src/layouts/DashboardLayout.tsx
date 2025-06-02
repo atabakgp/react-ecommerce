@@ -1,9 +1,32 @@
-import { Outlet } from "react-router";
+import { Outlet, NavLink } from "react-router-dom";
+import "./DashboardLayout.scss";
 
 const DashboardLayout = () => {
   return (
     <div className="DashboardLayout">
-      <Outlet />
+      <div className="container">
+        <div className="row">
+          <nav className="col-lg-3 dashboard-nav">
+            <NavLink
+              end
+              to="/dashboard"
+              className={({ isActive }) => (isActive ? "active" : "")}
+            >
+              Dashboard Home
+            </NavLink>
+
+            <NavLink
+              to="/dashboard/profile"
+              className={({ isActive }) => (isActive ? "active" : "")}
+            >
+              Profile
+            </NavLink>
+          </nav>
+          <div className="col-lg-9">
+            <Outlet />
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

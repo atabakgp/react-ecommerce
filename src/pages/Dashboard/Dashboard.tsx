@@ -1,13 +1,14 @@
 import "./Dashboard.scss";
 import { Link } from "react-router-dom";
-import ProfileForm from "../../components/Profile/ProfileForm";
+import Profile from "../../pages/Profile/Profile";
 
 function Dashboard() {
   return (
     <div className="dashboard">
       <div className="container">
-        <ProfileForm/>
-        <Link to="/">Go to Home</Link>
+        <div className="dashboard">
+          <h2>Welcome to your dashboard</h2>
+        </div>
       </div>
     </div>
   );

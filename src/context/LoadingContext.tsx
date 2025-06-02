@@ -13,7 +13,7 @@ export const LoadingProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   return (
     <LoadingContext.Provider value={{ loading, setLoading }}>
       {children}

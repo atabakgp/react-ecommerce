@@ -5,12 +5,14 @@ import {
   updateUserProfile,
   updateUserEmail,
 } from "../../services/profileServices";
-import { UserProfile } from "../../types/profile";
-import { auth } from "../../firebase/firebase";
+
+import { useToast } from "../../context/ToastContext";
+
 
 function ProfileForm() {
   const [error, setError] = useState("");
   const { user, setUser } = useUser();
+  const { showToast } = useToast();
 
   // Form 1: Profile (Display Name)
   const {
@@ -20,7 +22,7 @@ function ProfileForm() {
     reset: resetProfile,
   } = useForm<{ name: string }>({
     defaultValues: {
-      name: ""
+      name: "",
     },
   });
 
@@ -32,14 +34,14 @@ function ProfileForm() {
     reset: resetEmail,
   } = useForm<{ email: string }>({
     defaultValues: {
-      email: ""
+      email: "",
     },
   });
 
   useEffect(() => {
     if (user) {
-			resetProfile({ name: user.displayName ?? "" });
-			resetEmail({ email: user.email ?? "" });
+      resetProfile({ name: user.displayName ?? "" });
+      resetEmail({ email: user.email ?? "" });
     }
   }, [user, resetProfile, resetEmail]);
 
@@ -51,19 +53,7 @@ function ProfileForm() {
         ...prev,
         displayName,
       }));
-    } catch (error: any) {
-      setError(error.message);
-    }
-  };
-
-  const updateEmail: SubmitHandler<{ email: string}> = async (data) => {
-    try {
-      const firebaseUser = await updateUserEmail(data.email);
-      const email = firebaseUser.email;
-      setUser((prev) => ({
-        ...prev,
-        email,
-      }));
+      showToast("Profile updated! successfully!", "success");
     } catch (error: any) {
       setError(error.message);
     }
@@ -73,45 +63,32 @@ function ProfileForm() {
     <>
       <h2>Profile</h2>
 
-      <h4>Update Display Name</h4>
-      <form onSubmit={handleProfileSubmit(updateProfile)}>
-        {error && <div className="alert alert-danger">{error}</div>}
+      <div>
+        <h4>Update Display Name</h4>
+        <form onSubmit={handleProfileSubmit(updateProfile)}>
+          {error && <div className="alert alert-danger">{error}</div>}
 
-        <div className="mb-3">
-          <label>Name</label>
-          <input
-            type="text"
-            className={`form-control ${profileErrors.name ? "is-invalid" : ""}`}
-            {...registerProfile("name", { required: "Name is required" })}
-          />
-          {profileErrors.name && (
-            <div className="invalid-feedback">{profileErrors.name.message}</div>
-          )}
-        </div>
+          <div className="mb-3">
+            <label>Name</label>
+            <input
+              type="text"
+              className={`form-control ${
+                profileErrors.name ? "is-invalid" : ""
+              }`}
+              {...registerProfile("name", { required: "Name is required" })}
+            />
+            {profileErrors.name && (
+              <div className="invalid-feedback">
+                {profileErrors.name.message}
+              </div>
+            )}
+          </div>
 
-        <button type="submit" className="btn btn-success w-100">
-          Update Profile
-        </button>
-      </form>
-
-      <h4 className="mt-4">Update Email</h4>
-      <form onSubmit={handleEmailSubmit(updateEmail)}>
-        <div className="mb-3">
-          <label>Email address</label>
-          <input
-            type="email"
-            className={`form-control ${emailErrors.email ? "is-invalid" : ""}`}
-            {...registerEmail("email", { required: "Email is required" })}
-          />
-          {emailErrors.email && (
-            <div className="invalid-feedback">{emailErrors.email.message}</div>
-          )}
-        </div>
-
-        <button type="submit" className="btn btn-success w-100">
-          Update Email
-        </button>
-      </form>
+          <button type="submit" className="btn btn-success w-100">
+            Update Profile
+          </button>
+        </form>
+      </div>
     </>
   );
 }
