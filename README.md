@@ -1,12 +1,38 @@
-# React + Vite
+# React Firebase E-commerce Project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple e-commerce web app built with React and Firebase Authentication. Product data is fetched from [dummyjson.com](https://dummyjson.com/) API. Firebase handles user authentication and user management.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+- ✅ User authentication with Firebase (Email/Password, Google Sign-In)
+- 🛍️ Product and category listing from dummyjson.com
+- ⚡ Responsive UI built with React and SCSS
+- 🔁 Shopping cart functionality (local state or Firebase-based)
+- 📦 React Query for efficient data fetching and caching
+- 🧭 Routing with React Router v6
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## Tech Stack
+
+- **React** (Hooks, Functional Components)
+- **Firebase Authentication**
+- **React Query**
+- **React Router v6**
+- **Axios**
+- **SCSS**
+- **Vite**
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v16+ recommended)
+- Firebase project with Authentication enabled  
+- Firebase CLI installed (optional):
+  ```bash
+  npm install -g firebase-tools
