@@ -1,8 +1,7 @@
 {
   "compilerOptions": {
-    "noEmit": true,
-    "allowImportingTsExtensions": true,
     "target": "es6",
+    "module": "esnext",
     "lib": ["dom", "esnext"],
     "jsx": "react-jsx",
     "moduleResolution": "node",
@@ -10,12 +9,13 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "module": "esnext",
-    "baseUrl": "./src",
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["src/*"]
     }
   },
-  "include": ["src/**/*"],
+  "include": ["src"],
   "exclude": ["node_modules"]
 }

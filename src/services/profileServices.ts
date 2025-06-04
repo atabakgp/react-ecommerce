@@ -7,7 +7,6 @@ import {
   EmailAuthProvider,
   updatePassword
 } from "firebase/auth";
-import { UserProfile } from "../types/profile";
 
 export async function updateUserProfile(name: string) {
   const user = auth.currentUser;

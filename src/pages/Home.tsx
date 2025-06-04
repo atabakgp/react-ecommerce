@@ -2,14 +2,15 @@ import { useProducts } from "../hooks/products/useProducts";
 import ProductList from "../components/Product/ProductList/ProductList";
 import "./Home.scss";
 
-const Home = () => {
-  const { isPending, error, data } = useProducts(10);
 
-  if (isPending) return "Loading...";
+const Home = () => {
+  const { isPending, error, data: products } = useProducts(10);
+
+  if (isPending) return;
   if (error) return "An error has occurred: " + error.message;
 
-  const newArrivals = data.products.slice(0,5);
-  const recommendation = data.products.slice(5,10);
+  const newArrivals = products.products.slice(0,5);
+  const recommendation = products.products.slice(5,10);
 
   return (
     <div className="home">

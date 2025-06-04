@@ -4,6 +4,7 @@ import { useUser } from "../../context/UserContext";
 import { useLoading } from "../../context/LoadingContext";
 import { logoutUser } from "../../services/authServices";
 
+
 function Header() {
   const { user, setUser } = useUser();
 

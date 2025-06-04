@@ -7,9 +7,6 @@ import useAuthObserver from "./hooks/auth/useAuthObserver";
 import Spinner from "./components/Spinner/Spinner";
 import { useLoading } from "./context/LoadingContext";
 
-
-
-
 function App() {
   useAuthObserver();
   const { loading } = useLoading();
@@ -22,6 +19,5 @@ function App() {
     </div>
   );
 }
-
 
 export default App;
