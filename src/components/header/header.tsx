@@ -22,6 +22,13 @@ function Header() {
         <div className="logo">
           <Link to="/">Website Logo</Link>
         </div>
+        <div className="search-bar">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="search products"
+          />
+        </div>
         <ul className="header-menu">
           {!user ? (
             <>
@@ -35,7 +42,7 @@ function Header() {
           ) : (
             <>
               <li>
-                <Link to="/dashboard">{user.displayName}'s Dashboard</Link>
+                <Link to="/dashboard">{user.displayName}'s account</Link>
               </li>
               <button className="logout" type="button" onClick={handleLogout}>
                 Logout

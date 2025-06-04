@@ -53,7 +53,7 @@ function ProfileForm() {
         ...prev,
         displayName,
       }));
-      showToast("Profile updated! successfully!", "success");
+      showToast("Profile updated successfully!", "success");
     } catch (error: any) {
       setError(error.message);
     }

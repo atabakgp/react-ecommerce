@@ -36,7 +36,7 @@ function ProfileForm() {
         ...prev,
         email,
       }));
-      showToast("Email updated! successfully!", "success");
+      showToast("Email updated successfully!", "success");
 
     } catch (error: any) {
       setError(error.message);

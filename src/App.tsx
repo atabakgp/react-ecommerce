@@ -3,8 +3,7 @@ import { Outlet } from "react-router";
 import Header from "./components/Header/Header";
 import "./App.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
-import useAuthObserver from "./hooks/useAuthObserver";
-import { useUser } from "./context/UserContext";
+import useAuthObserver from "./hooks/auth/useAuthObserver";
 import Spinner from "./components/Spinner/Spinner";
 import { useLoading } from "./context/LoadingContext";
 
