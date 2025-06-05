@@ -15,7 +15,7 @@ import PublicRoute from "./publicRoutes";
 
 import { getCategories } from "@/services/productService";
 
-export async function categoriesLoader() {
+export async function fetchCategoriesLoader() {
   const categories = await getCategories();
   return categories;
 }
@@ -27,7 +27,8 @@ export const router = createBrowserRouter([
     children: [
       {
         Component: MainLayout,
-        loader: categoriesLoader,
+        loader: fetchCategoriesLoader,
+        id: 'mainLayout',
         children: [
           { 
             index: true, 

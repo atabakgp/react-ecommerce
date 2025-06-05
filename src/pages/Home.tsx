@@ -1,12 +1,14 @@
 import { useProducts } from "../hooks/products/useProducts";
 import ProductList from "../components/Product/ProductList/ProductList";
 import "./Home.scss";
-import { useCategories } from "@/context/CategoriesContext";
 import Categories from "@/components/Categories/Categories";
+import { ICategoryItem } from "@/interfaces/categories";
+import { useRouteLoaderData } from 'react-router-dom';
+
 
 const Home = () => {
   const { isPending, error, data: products } = useProducts(15);
-  const { categories } = useCategories();
+  const categories = useRouteLoaderData('mainLayout') as ICategoryItem[];
 
   if (isPending) return;
   if (error) return "An error has occurred: " + error.message;

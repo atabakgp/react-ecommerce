@@ -1,12 +1,13 @@
 import "./Listing.scss";
-import NavBar from "@/components/Categories/Categories";
-import { useCategories } from "@/context/CategoriesContext";
+import { useRouteLoaderData } from "react-router-dom";
 import Categories from "@/components/Categories/Categories";
+import { ICategoryItem } from "@/interfaces/categories";
 
 interface ListingProps {}
 
 const Listing = () => {
-  const { categories } = useCategories();
+  const categories = useRouteLoaderData("mainLayout") as ICategoryItem[];
+
   return (
     <div className="products-listing">
       <Categories categories={categories} />
