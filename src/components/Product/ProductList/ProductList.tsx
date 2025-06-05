@@ -1,19 +1,19 @@
 import React from "react";
-import { IProduct } from "../../../interfaces/products";
+import { IProduct, IProductsResponse } from "../../../interfaces/products";
 import ProductItem from "../ProductItem/ProductItem";
 import "./ProductList.scss";
 
 interface ProductListProps {
   title: string;
-  products: IProduct[];
+  products: IProduct[] | undefined;
 }
 
-const ProductList: React.FC<ProductListProps> = ({ title, products }) => {
+const ProductList = ({ title, products }: ProductListProps) => {
   return (
     <section>
       <h2>{title}</h2>
       <div className="product-list row">
-        {products.map((product) => (
+        {products && products.map((product) => (
           <ProductItem key={product.id} product={product} />
         ))}
       </div>
