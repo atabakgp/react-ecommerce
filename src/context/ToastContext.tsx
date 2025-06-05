@@ -16,7 +16,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
 
     setTimeout(() => {
       setToast(null);
-    }, 3000); // Hide toast after 3 seconds
+    }, 3000);
   }
 
   return (

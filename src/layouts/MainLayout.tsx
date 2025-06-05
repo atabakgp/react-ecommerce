@@ -1,13 +1,21 @@
+import { useEffect } from "react";
 import { Outlet } from "react-router";
-import { useCategories } from "@/hooks/products/useProducts";
-import NavBar from "@/components/navbar/navbar";
+import { useLoaderData } from "react-router-dom";
+import { useCategories } from "@/context/CategoriesContext";
+import { ICategoryItem } from "@/interfaces/categories";
 
 const MainLayout = () => {
-  const { data: categories } = useCategories();
+  const { setCategories } = useCategories();
+  const categories = useLoaderData() as ICategoryItem[];
+
+  useEffect(() => {
+    if (categories) {
+      setCategories(categories);
+    }
+  }, [categories, setCategories]);
 
   return (
     <div className="MainLayout">
-      {categories && <NavBar categories={categories} />}
       <Outlet />
     </div>
   );

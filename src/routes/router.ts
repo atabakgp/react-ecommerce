@@ -1,17 +1,24 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, useLoaderData, useActionData, Form } from "react-router-dom";
 import App from "../App";
-import MainLayout from "../layouts/MainLayout";
-import DashboardLayout from "../layouts/DashboardLayout";
+import MainLayout from "@/layouts/MainLayout";
+import DashboardLayout from "@/layouts/DashboardLayout";
 
-import Home from "../pages/Home";
-import Login from "../pages/Login/Login";
-import Register from "../pages/Register/Register";
-import Dashboard from "../pages/Dashboard/Dashboard";
-import Profile from "../pages/Profile/Profile";
+import Home from "@/pages/Home";
+import Login from "@/pages/Login/Login";
+import Register from "@/pages/Register/Register";
+import Dashboard from "@/pages/Dashboard/Dashboard";
+import Profile from "@/pages/Profile/Profile";
+import Listing from "@/pages/Listing/Listing"
 
 import PrivateRoute from "./privateRoutes";
 import PublicRoute from "./publicRoutes";
 
+import { getCategories } from "@/services/productService";
+
+export async function categoriesLoader() {
+  const categories = await getCategories();
+  return categories;
+}
 
 export const router = createBrowserRouter([
   {
@@ -20,7 +27,17 @@ export const router = createBrowserRouter([
     children: [
       {
         Component: MainLayout,
-        children: [{ index: true, Component: Home }],
+        loader: categoriesLoader,
+        children: [
+          { 
+            index: true, 
+            Component: Home,
+          },
+          {
+            path: "category/:categorySlug",
+            Component: Listing
+          }
+        ],
       },
 
       {

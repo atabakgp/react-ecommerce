@@ -1,4 +1,3 @@
-// src/services/productService.ts
 import productAPI from "./axios";
 import { IProductsResponse } from "../interfaces/products";
 import { ICategoryItem } from "../interfaces/categories";

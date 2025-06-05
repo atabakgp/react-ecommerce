@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom";
 import { ICategoryItem } from "../../interfaces/categories";
-import "./NavBar.scss";
+import "./Categories.scss";
 
-interface NavBarProps {
+interface CategoriesListProps {
   categories: ICategoryItem[];
+  mode?: "slider" | "sidebar" | "dropdown"
 }
 
-function NavBar({ categories }: NavBarProps) {
+function Categories({ categories, mode }: CategoriesListProps) {
   return (
     <nav className="navbar">
       <div className="container">
@@ -22,4 +23,4 @@ function NavBar({ categories }: NavBarProps) {
   );
 }
 
-export default NavBar;
+export default Categories;

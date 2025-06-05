@@ -8,7 +8,7 @@ export const useProducts = (limit?: number, skip?: number) => {
   });
 };
 
-export const useCategories = () => {
+export const useFetchCategories = () => {
   return useQuery({
     queryKey: ["categories"],
     queryFn: getCategories,

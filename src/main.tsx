@@ -7,10 +7,9 @@ import "./index.css";
 import { UserProvider } from "./context/UserContext";
 import { LoadingProvider } from "./context/LoadingContext";
 import { ToastProvider } from "./context/ToastContext";
-import {
-  QueryClient,
-  QueryClientProvider,
-} from "@tanstack/react-query";
+import { CategoriesProvider } from "./context/CategoriesContext";
+
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const queryClient = new QueryClient();
 
@@ -20,7 +19,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <UserProvider>
         <LoadingProvider>
           <ToastProvider>
-            <RouterProvider router={router} />
+            <CategoriesProvider>
+              <RouterProvider router={router} />
+            </CategoriesProvider>
           </ToastProvider>
         </LoadingProvider>
       </UserProvider>
