@@ -37,6 +37,9 @@
   a {
     padding: 8px 0;
     display: block;
+    &.active {
+      background-color: #ff6f61;
+    }
 
   }
 
