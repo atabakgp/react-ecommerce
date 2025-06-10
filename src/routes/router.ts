@@ -8,7 +8,8 @@ import Login from "@/pages/Login/Login";
 import Register from "@/pages/Register/Register";
 import Dashboard from "@/pages/Dashboard/Dashboard";
 import Profile from "@/pages/Profile/Profile";
-import Listing from "@/pages/Listing/Listing"
+import Listing from "@/pages/Listing/Listing";
+import Detail from "@/pages/Detail/Detail";
 
 import PrivateRoute from "./privateRoutes";
 import PublicRoute from "./publicRoutes";
@@ -37,6 +38,10 @@ export const router = createBrowserRouter([
           {
             path: "category/:categorySlug",
             Component: Listing
+          },
+          {
+            path: "/:brand?/:title/:productId",
+            Component: Detail
           }
         ],
       },

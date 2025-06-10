@@ -16,7 +16,6 @@ const Listing = () => {
     error,
   } = useFetchProductsByCategory(categorySlug);
 
-
   return (
     <div className="products-listing">
       <div className="container">
@@ -27,10 +26,7 @@ const Listing = () => {
           </div>
           <div className="col-lg-10">
             {isPending && <div>Loading...</div>}
-            <ProductList
-              products={productsByCategory?.products}
-              title=""
-            />
+            <ProductList products={productsByCategory?.products} />
           </div>
         </div>
       </div>

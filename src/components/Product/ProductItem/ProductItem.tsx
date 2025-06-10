@@ -1,13 +1,26 @@
-import { IProduct } from "../../../interfaces/products";
+import { IProduct } from "@/interfaces/products";
 import "./ProductItem.scss";
 import StarRating from "./StarRating";
+import { Link } from "react-router-dom";
 
 interface IProductItemProps {
   product: IProduct;
 }
 const ProductItem = ({ product }: IProductItemProps) => {
+  const slugGenerator = (text: string): string => {
+    const slug = text.toLowerCase().replace(/\s+/g, "-");
+    return slug;
+  };
+
+  const urlGenerator = (product: IProduct): string => {
+    const titleSlug = product.title ? `/${slugGenerator(product.title)}` : "";
+    const brandSlug = product.brand ? `/${slugGenerator(product.brand)}` : "";
+    const url = `${brandSlug}${titleSlug}/${product.id}`;
+    return url;
+  };
+
   return (
-    <div className="col-lg-2 product-item">
+    <Link className="col-lg-2 product-item" to={urlGenerator(product)}>
       <div className="product-image">
         <img src={product.thumbnail} alt={product.title} />
       </div>
@@ -20,7 +33,7 @@ const ProductItem = ({ product }: IProductItemProps) => {
           <StarRating rating={product.rating} />
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 export default ProductItem;

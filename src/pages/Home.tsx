@@ -22,9 +22,9 @@ const Home = () => {
         <Categories categories={categories.slice(0, 12)} />
       </div>
       <div className="container">
-        <div className="home-page-product">
+        <div className="home-page-products">
           <ProductList title="New Arrivals" products={newArrivals} />
-          <ProductList title="Recommendation" products={recommendation} />
+          <ProductList title="Recommendations" products={recommendation} />
           <ProductList title="Popular Products" products={popularProducts} />
         </div>
       </div>

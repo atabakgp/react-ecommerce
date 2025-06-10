@@ -1,12 +1,17 @@
 @import "@/styles//variables.scss";
 
 .home {
-	padding-bottom: 0;
-	.home-page-categories {
-		margin-bottom: 24px;
-		position: relative;
-		background-color: $color-text-secondary;
-		color: #fff;
-		margin: auto;
+  padding-bottom: 0;
+  .home-page-categories {
+    margin-bottom: 24px;
+    position: relative;
+    background-color: $color-text-secondary;
+    color: #fff;
+    margin: auto;
+  }
+  .home-page-products {
+	section {
+		padding: 32px 0;
 	}
+  }
 }
