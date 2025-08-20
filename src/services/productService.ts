@@ -26,3 +26,10 @@ export const getProductsByCategory = async (
   const res = await productAPI.get("/products/category/" + categorySlug);
   return res.data;
 };
+
+export const getProductById = async (
+  productId: number | string
+): Promise<IProduct> => {
+  const res = await productAPI.get(`/products/${productId}`);
+  return res.data;
+};

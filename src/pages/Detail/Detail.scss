@@ -1,0 +1,15 @@
+@use "@/styles/_variables" as *;
+
+.product-detail {
+  .swiper,
+  .swiper-slide {
+    width: 100%;
+  }
+
+  img {
+    display: block;
+    margin: 0 auto;
+  }
+}
+
+
