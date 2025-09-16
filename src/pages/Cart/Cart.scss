@@ -1,0 +1,34 @@
+.cart {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.cart-items {
+  margin-bottom: 2rem;
+}
+
+.cart-item {
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  transition: box-shadow 0.2s;
+  &:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+  }
+}
+
+.cart-total {
+  text-align: right;
+}
+
+@media (max-width: 600px) {
+  .cart-item {
+    flex-direction: column;
+    align-items: flex-start !important;
+    img {
+      margin-bottom: 1rem;
+    }
+  }
+  .cart-total {
+    text-align: left;
+  }
+}

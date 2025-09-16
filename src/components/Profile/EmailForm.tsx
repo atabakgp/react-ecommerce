@@ -5,7 +5,7 @@ import { updateUserEmail } from "../../services/profileServices";
 import { useToast } from "../../context/ToastContext";
 
 
-function ProfileForm() {
+function EmailForm() {
   const [error, setError] = useState("");
   const { user, setUser } = useUser();
   const { showToast } = useToast();
@@ -69,4 +69,4 @@ function ProfileForm() {
   );
 }
 
-export default ProfileForm;
+export default EmailForm;

@@ -4,7 +4,7 @@ import { useUser } from "../../context/UserContext";
 import { changePassword } from "../../services/profileServices";
 import { useToast } from "../../context/ToastContext";
 
-function ProfileForm() {
+function ChangePasswordForm() {
   const [error, setError] = useState("");
   const { showToast } = useToast();
 
@@ -98,4 +98,4 @@ function ProfileForm() {
   );
 }
 
-export default ProfileForm;
+export default ChangePasswordForm;

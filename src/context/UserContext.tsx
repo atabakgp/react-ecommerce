@@ -12,7 +12,7 @@ type User = {
 
 type UserContextType = {
   user: User;
-  setUser: React.Dispatch<React.SetStateAction<User>>;
+  setUser: (user: User)=> void;
 };
 
 const UserContext = createContext<UserContextType | undefined>(undefined);

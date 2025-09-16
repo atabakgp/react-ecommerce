@@ -10,6 +10,7 @@ import Dashboard from "@/pages/Dashboard/Dashboard";
 import Profile from "@/pages/Profile/Profile";
 import Listing from "@/pages/Listing/Listing";
 import Detail from "@/pages/Detail/Detail";
+import Cart from "@/pages/Cart/Cart";
 
 import PrivateRoute from "./privateRoutes";
 import PublicRoute from "./publicRoutes";
@@ -42,7 +43,11 @@ export const router = createBrowserRouter([
           {
             path: "/:brand?/:title/:productId",
             Component: Detail
-          }
+          },
+          {
+            path: "cart",
+            Component: Cart
+          },
         ],
       },
 

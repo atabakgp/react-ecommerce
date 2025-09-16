@@ -2,18 +2,17 @@ import "./Detail.scss";
 import { useParams } from "react-router-dom";
 import { useFetchProductById } from "@/hooks/products/useProducts";
 import StarRating from "@/components/Product/ProductItem/StarRating";
-// @ts-ignore: types may not be available in the ESLint environment
 import { Swiper, SwiperSlide } from "swiper/react";
-// @ts-ignore: types may not be available in the ESLint environment
 import { Navigation, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import { useBasket } from "@/context/BasketContext";
 
 const Detail = () => {
   const { productId } = useParams();
   const { data: product, isPending, error } = useFetchProductById(productId);
-
+  const { AddItem } = useBasket();
   if (isPending) {
     return <div className="product-detail container py-4">Loading...</div>;
   }
@@ -29,6 +28,16 @@ const Detail = () => {
     : product.thumbnail
     ? [product.thumbnail]
     : [];
+
+  const handleAddToBasket = () => {
+    AddItem({
+      productId: product.id.toString(),
+      name: product.title,
+      price: product.price,
+      image: product.thumbnail,
+      quantity: 1,
+    });
+  };
 
   return (
     <div className="product-detail">
@@ -74,20 +83,16 @@ const Detail = () => {
               </div>
 
               <div className="text-muted">Brand: {product.brand}</div>
-              <div className="text-muted">Category: {product.category}</div>
+              <div className="text-muted">{product.shippingInformation}</div>
+              <div className="text-muted">{product.returnPolicy}</div>
               <div className={product.stock > 0 ? "text-success" : "text-danger"}>
                 {product.stock > 0 ? `In stock (${product.stock})` : "Out of stock"}
               </div>
 
               <p className="m-0">{product.description}</p>
 
-              {product.tags && product.tags.length > 0 ? (
-                <div className="d-flex flex-wrap gap-2">
-                  {product.tags.map((tag) => (
-                    <span key={tag} className="badge text-bg-light border">{tag}</span>
-                  ))}
-                </div>
-              ) : null}
+              <button className="btn btn-primary" onClick={handleAddToBasket}>Add to Basket</button>
+
             </div>
           </div>
         </div>
