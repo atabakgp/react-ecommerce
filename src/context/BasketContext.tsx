@@ -9,7 +9,7 @@ type BasketContextType = {
   basket: Basket;
   AddItem: (item: BasketItem) => void;
   RemoveItem: (item: BasketItem) => void;
-  updateQuantity: (item: BasketItem) => void;
+  updateQuantity: (productId: string, quantity: number) => void;
   ClearBasket: () => void;
 };
 
@@ -25,10 +25,7 @@ export const BasketProvider = ({ children }: ProviderProps) => {
       );
       if (existingItem) {
         // Use updateQuantity to update the quantity
-        updateQuantity({
-          ...existingItem,
-          quantity: existingItem.quantity + item.quantity,
-        });
+        updateQuantity(item.productId, item.quantity + 1);
         return prevBasket;
       } else {
         return {
@@ -46,13 +43,12 @@ export const BasketProvider = ({ children }: ProviderProps) => {
     }));
   };
 
-  const updateQuantity = (item: BasketItem) => {
+  const updateQuantity = (productId: string, quantity: number) => {
     setBasket((prevBasket) => ({
       ...prevBasket,
       items: prevBasket.items.map((i) =>
-        i.productId === item.productId ? item : i
+        i.productId === productId ? { ...i, quantity } : i
       ),
-      
     }));
   };
 

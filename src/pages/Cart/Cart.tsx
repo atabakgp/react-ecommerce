@@ -10,7 +10,7 @@ const Cart = () => {
     if (quantity < 1) return;
     const item = basket.items.find((i) => i.productId === productId);
     if (item) {
-      updateQuantity({ ...item, quantity });
+      updateQuantity(productId, quantity);
     }
   };
 
