@@ -19,9 +19,9 @@ export const CartProvider = ({ children }: ProviderProps) => {
   const [cart, setCart] = useState<Cart>({ items: [] });
 
   const addItem = (item: CartItem) => {
-    setCart((prevCart) => {
+    setCart((prevCart: Cart) => {
       const existingItem = prevCart.items.find(
-        (i) => i.productId === item.productId
+        (i: CartItem) => i.productId === item.productId
       );
       if (existingItem) {
         // Use updateQuantity to update the quantity
@@ -37,16 +37,18 @@ export const CartProvider = ({ children }: ProviderProps) => {
   };
 
   const removeItem = (item: CartItem) => {
-    setCart((prevCart) => ({
+    setCart((prevCart: Cart) => ({
       ...prevCart,
-      items: prevCart.items.filter((i) => i.productId !== item.productId),
+      items: prevCart.items.filter(
+        (i: CartItem) => i.productId !== item.productId
+      ),
     }));
   };
 
   const updateQuantity = (productId: string, quantity: number) => {
-    setCart((prevCart) => ({
+    setCart((prevCart: Cart) => ({
       ...prevCart,
-      items: prevCart.items.map((i) =>
+      items: prevCart.items.map((i: CartItem) =>
         i.productId === productId ? { ...i, quantity } : i
       ),
     }));

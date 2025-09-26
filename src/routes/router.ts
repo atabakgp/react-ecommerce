@@ -22,9 +22,6 @@ import PublicRoute from "./publicRoutes";
 
 import { getCategories } from "@/services/productService";
 
-import { auth } from "../firebase/firebase";
-import { redirect } from "react-router";
-
 export async function fetchCategoriesLoader() {
   const categories = await getCategories();
   return categories;

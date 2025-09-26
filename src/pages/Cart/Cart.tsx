@@ -2,27 +2,28 @@ import React from "react";
 import "./Cart.scss";
 import { useCart } from "@/context/CartContext";
 import { Link } from "react-router-dom";
+import { Cart, CartItem } from "@/types/cart";
 
-const Cart = () => {
+const CartPage = () => {
   const { cart, removeItem, updateQuantity, clearCart } = useCart();
 
   const handleQuantityChange = (productId: string, quantity: number) => {
     if (quantity < 1) return;
-    const item = cart.items.find((i) => i.productId === productId);
+    const item = cart.items.find((i: CartItem) => i.productId === productId);
     if (item) {
       updateQuantity(productId, quantity);
     }
   };
 
   const handleRemove = (productId: string) => {
-    const item = cart.items.find((i) => i.productId === productId);
+    const item = cart.items.find((i: CartItem) => i.productId === productId);
     if (item) {
       removeItem(item);
     }
   };
 
   const total = cart.items.reduce(
-    (sum, item) => sum + item.price * item.quantity,
+    (sum: number, item: CartItem) => sum + item.price * item.quantity,
     0
   );
 
@@ -42,7 +43,7 @@ const Cart = () => {
         Clear Cart
       </button>
       <div className="cart-items">
-        {cart.items.map((item) => (
+        {cart.items.map((item: CartItem) => (
           <div
             className="cart-item d-flex align-items-center mb-3 p-2 border rounded"
             key={item.productId}
@@ -97,4 +98,4 @@ const Cart = () => {
   );
 };
 
-export default Cart;
+export default CartPage;
