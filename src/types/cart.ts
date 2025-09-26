@@ -1,4 +1,4 @@
-export interface BasketItem {
+export interface CartItem {
   productId: string;
   name: string;
   price: number;
@@ -6,6 +6,6 @@ export interface BasketItem {
   quantity: number;
 }
 
-export interface Basket {
-  items: BasketItem[];
+export interface Cart {
+  items: CartItem[];
 }

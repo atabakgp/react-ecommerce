@@ -3,12 +3,15 @@ import { Link } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 import { useLoading } from "../../context/LoadingContext";
 import { logoutUser } from "../../services/authServices";
-import { useBasket } from "@/context/BasketContext";
+import { useCart } from "@/context/CartContext";
 
 function Header() {
   const { user, setUser } = useUser();
-  const { basket } = useBasket();
-  const totalQuantity = basket.items.reduce((sum, item) => sum + item.quantity, 0);
+  const { cart } = useCart();
+  const totalQuantity = cart.items.reduce(
+    (sum, item) => sum + item.quantity,
+    0
+  );
   const handleLogout = async () => {
     try {
       await logoutUser();
@@ -32,7 +35,7 @@ function Header() {
           />
         </div>
         <div className="basket-count">
-          <Link to="/cart">Basket ({totalQuantity})</Link>
+          <Link to="/cart">Cart ({totalQuantity})</Link>
         </div>
         <ul className="header-menu">
           {!user ? (

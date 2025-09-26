@@ -7,30 +7,33 @@ import { Navigation, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { useBasket } from "@/context/BasketContext";
+import { useCart } from "@/context/CartContext";
 
 const Detail = () => {
   const { productId } = useParams();
   const { data: product, isPending, error } = useFetchProductById(productId);
-  const { AddItem } = useBasket();
+  const { addItem } = useCart();
   if (isPending) {
     return <div className="product-detail container py-4">Loading...</div>;
   }
 
   if (error || !product) {
     return (
-      <div className="product-detail container py-4">Failed to load product.</div>
+      <div className="product-detail container py-4">
+        Failed to load product.
+      </div>
     );
   }
 
-  const images = (product.images && product.images.length > 0)
-    ? product.images
-    : product.thumbnail
-    ? [product.thumbnail]
-    : [];
+  const images =
+    product.images && product.images.length > 0
+      ? product.images
+      : product.thumbnail
+      ? [product.thumbnail]
+      : [];
 
-  const handleAddToBasket = () => {
-    AddItem({
+  const handleAddToCart = () => {
+    addItem({
       productId: product.id.toString(),
       name: product.title,
       price: product.price,
@@ -54,11 +57,18 @@ const Detail = () => {
             >
               {images.map((src, idx) => (
                 <SwiperSlide key={idx}>
-                  <div className="w-100 text-center" style={{ background: "#fff" }}>
+                  <div
+                    className="w-100 text-center"
+                    style={{ background: "#fff" }}
+                  >
                     <img
                       src={src}
                       alt={product.title}
-                      style={{ maxWidth: "100%", maxHeight: 500, objectFit: "contain" }}
+                      style={{
+                        maxWidth: "100%",
+                        maxHeight: 500,
+                        objectFit: "contain",
+                      }}
                     />
                   </div>
                 </SwiperSlide>
@@ -70,29 +80,40 @@ const Detail = () => {
             <div className="d-flex flex-column gap-3">
               <h2 className="m-0">{product.title}</h2>
               <div className="d-flex align-items-center gap-2">
-                <span className="fw-semibold">{product.rating?.toFixed?.(1) ?? product.rating}</span>
+                <span className="fw-semibold">
+                  {product.rating?.toFixed?.(1) ?? product.rating}
+                </span>
                 <StarRating rating={product.rating} />
-                <span className="text-muted">({product.reviews?.length ?? 0} reviews)</span>
+                <span className="text-muted">
+                  ({product.reviews?.length ?? 0} reviews)
+                </span>
               </div>
 
               <div>
                 <div className="fs-3 fw-bold">${product.price}</div>
                 {product.discountPercentage ? (
-                  <div className="text-success">Save {product.discountPercentage}%</div>
+                  <div className="text-success">
+                    Save {product.discountPercentage}%
+                  </div>
                 ) : null}
               </div>
 
               <div className="text-muted">Brand: {product.brand}</div>
               <div className="text-muted">{product.shippingInformation}</div>
               <div className="text-muted">{product.returnPolicy}</div>
-              <div className={product.stock > 0 ? "text-success" : "text-danger"}>
-                {product.stock > 0 ? `In stock (${product.stock})` : "Out of stock"}
+              <div
+                className={product.stock > 0 ? "text-success" : "text-danger"}
+              >
+                {product.stock > 0
+                  ? `In stock (${product.stock})`
+                  : "Out of stock"}
               </div>
 
               <p className="m-0">{product.description}</p>
 
-              <button className="btn btn-primary" onClick={handleAddToBasket}>Add to Basket</button>
-
+              <button className="btn btn-primary" onClick={handleAddToCart}>
+                Add to Cart
+              </button>
             </div>
           </div>
         </div>

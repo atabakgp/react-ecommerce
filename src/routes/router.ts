@@ -1,4 +1,9 @@
-import { createBrowserRouter, useLoaderData, useActionData, Form } from "react-router-dom";
+import {
+  createBrowserRouter,
+  useLoaderData,
+  useActionData,
+  Form,
+} from "react-router-dom";
 import App from "../App";
 import MainLayout from "@/layouts/MainLayout";
 import DashboardLayout from "@/layouts/DashboardLayout";
@@ -17,6 +22,9 @@ import PublicRoute from "./publicRoutes";
 
 import { getCategories } from "@/services/productService";
 
+import { auth } from "../firebase/firebase";
+import { redirect } from "react-router";
+
 export async function fetchCategoriesLoader() {
   const categories = await getCategories();
   return categories;
@@ -30,23 +38,29 @@ export const router = createBrowserRouter([
       {
         Component: MainLayout,
         loader: fetchCategoriesLoader,
-        id: 'mainLayout',
+        id: "mainLayout",
         children: [
-          { 
-            index: true, 
+          {
+            index: true,
             Component: Home,
           },
           {
             path: "category/:categorySlug",
-            Component: Listing
+            Component: Listing,
           },
           {
             path: "/:brand?/:title/:productId",
-            Component: Detail
+            Component: Detail,
           },
           {
             path: "cart",
-            Component: Cart
+            Component: PrivateRoute,
+            children: [
+              {
+                index: true,
+                Component: Cart,
+              },
+            ],
           },
         ],
       },

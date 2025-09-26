@@ -1,5 +1,4 @@
 import "./Profile.scss";
-import { Link } from "react-router-dom";
 import ProfileForm from "../../components/Profile/ProfileForm";
 import EmailForm from "../../components/Profile/EmailForm";
 import ChangePasswordForm from "../../components/Profile/ChangePasswordForm";

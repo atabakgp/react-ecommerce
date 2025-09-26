@@ -1,6 +1,4 @@
 import "./Dashboard.scss";
-import { Link } from "react-router-dom";
-import Profile from "../../pages/Profile/Profile";
 
 function Dashboard() {
   return (
