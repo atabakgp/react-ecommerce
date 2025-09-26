@@ -2,12 +2,12 @@ import React from "react";
 import "./Cart.scss";
 import { useCart } from "@/context/CartContext";
 import { Link } from "react-router-dom";
-import { Cart, CartItem } from "@/types/cart";
+import { Cart, CartItem } from "@/interfaces/cart";
 
 const CartPage = () => {
   const { cart, removeItem, updateQuantity, clearCart } = useCart();
 
-  const handleQuantityChange = (productId: string, quantity: number) => {
+  const handleQuantityChange = (productId: number, quantity: number) => {
     if (quantity < 1) return;
     const item = cart.items.find((i: CartItem) => i.productId === productId);
     if (item) {
@@ -15,11 +15,8 @@ const CartPage = () => {
     }
   };
 
-  const handleRemove = (productId: string) => {
-    const item = cart.items.find((i: CartItem) => i.productId === productId);
-    if (item) {
-      removeItem(item);
-    }
+  const handleRemove = (productId: number) => {
+    removeItem(productId);
   };
 
   const total = cart.items.reduce(

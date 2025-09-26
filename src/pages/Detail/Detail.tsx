@@ -34,7 +34,7 @@ const Detail = () => {
 
   const handleAddToCart = () => {
     addItem({
-      productId: product.id.toString(),
+      productId: product.id,
       name: product.title,
       price: product.price,
       image: product.thumbnail,
