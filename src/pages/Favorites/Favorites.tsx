@@ -13,10 +13,9 @@ const Favorites = () => {
       queryKey: ["product", id],
       queryFn: () => getProductById(id),
       enabled: Boolean(id),
-      staleTime: Infinity, // always consider cached data fresh
-      cacheTime: 1000 * 60 * 60, // keep in cache for 1 hour
-      refetchOnMount: false, // don't refetch when component mounts
-      refetchOnWindowFocus: false, // don't refetch when switching tabs
+      staleTime: 1000 * 60 * 10, // 10 min: cache considered fresh
+      refetchOnMount: false, // don’t refetch when returning to page
+      refetchOnWindowFocus: false, // don’t refetch when switching tabs
     })),
   });
 
