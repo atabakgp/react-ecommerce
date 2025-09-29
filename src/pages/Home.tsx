@@ -12,9 +12,7 @@ const Home = () => {
   if (isPending) return;
   if (error) return "An error has occurred: " + error.message;
 
-  const newArrivals = data.products.slice(0, 5);
-  const recommendation = data.products.slice(5, 10);
-  const popularProducts = data.products.slice(10, 15);
+  const newArrivals = data.products.slice(0, 30);
 
   return (
     <div className="home">
@@ -24,8 +22,6 @@ const Home = () => {
       <div className="container">
         <div className="home-page-products">
           <ProductList title="New Arrivals" products={newArrivals} />
-          <ProductList title="Recommendations" products={recommendation} />
-          <ProductList title="Popular Products" products={popularProducts} />
         </div>
       </div>
     </div>

@@ -2,21 +2,33 @@ import { IProduct } from "@/interfaces/products";
 import "./ProductItem.scss";
 import StarRating from "./StarRating";
 import { Link } from "react-router-dom";
+import { FaHeart, FaRegHeart } from "react-icons/fa6";
+import { useFavoritesContext } from "@/context/FavoriteContext";
 
 interface IProductItemProps {
   product: IProduct;
 }
+
 const ProductItem = ({ product }: IProductItemProps) => {
+  const { isFavorite, toggleFavorite } = useFavoritesContext();
+
   const slugGenerator = (text: string): string => {
-    const slug = text.toLowerCase().replace(/\s+/g, "-");
-    return slug;
+    return text.toLowerCase().replace(/\s+/g, "-");
   };
 
   const urlGenerator = (product: IProduct): string => {
     const titleSlug = product.title ? `/${slugGenerator(product.title)}` : "";
     const brandSlug = product.brand ? `/${slugGenerator(product.brand)}` : "";
-    const url = `${brandSlug}${titleSlug}/${product.id}`;
-    return url;
+    return `${brandSlug}${titleSlug}/${product.id}`;
+  };
+
+  const handleToggleFavorite = (
+    event: React.MouseEvent,
+    productId: number
+  ): void => {
+    event.preventDefault();
+    event.stopPropagation();
+    toggleFavorite(productId);
   };
 
   return (
@@ -33,7 +45,18 @@ const ProductItem = ({ product }: IProductItemProps) => {
           <StarRating rating={product.rating} />
         </div>
       </div>
+      <button
+        className="favorite-icon"
+        onClick={(e) => handleToggleFavorite(e, product.id)}
+      >
+        {isFavorite(product.id) ? (
+          <FaHeart color="red" size="1.3em" />
+        ) : (
+          <FaRegHeart size="1.3em" />
+        )}
+      </button>
     </Link>
   );
 };
+
 export default ProductItem;

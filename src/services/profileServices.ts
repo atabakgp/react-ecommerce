@@ -5,7 +5,7 @@ import {
   updateEmail,
   reauthenticateWithCredential,
   EmailAuthProvider,
-  updatePassword
+  updatePassword,
 } from "firebase/auth";
 
 export async function updateUserProfile(name: string) {
@@ -25,9 +25,6 @@ export async function updateUserEmail(email: string) {
   await updateEmail(user, email);
   return user;
 }
-
-
-
 
 export async function changePassword(
   currentPassword: string,
@@ -51,7 +48,9 @@ export async function changePassword(
       case "auth/requires-recent-login":
         throw new Error("Please log in again to confirm your identity.");
       case "auth/too-many-requests":
-        throw new Error("Too many failed attempts. Please wait a moment and try again.");
+        throw new Error(
+          "Too many failed attempts. Please wait a moment and try again."
+        );
       case "auth/user-disabled":
         throw new Error("Your account has been disabled. Contact support.");
       case "auth/user-not-found":

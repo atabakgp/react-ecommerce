@@ -11,6 +11,7 @@
   flex-direction: column;
   max-width: 280px;
   margin: $spacing-base;
+  position: relative;
 
   &:hover {
     transform: translateY(-8px);
@@ -67,6 +68,15 @@
         width: 14px;
         height: 14px;
       }
+    }
+  }
+  .favorite-icon {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    cursor: pointer;
+    :hover {
+      color: red;
     }
   }
 }

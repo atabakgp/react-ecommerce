@@ -16,6 +16,7 @@ import Profile from "@/pages/Profile/Profile";
 import Listing from "@/pages/Listing/Listing";
 import Detail from "@/pages/Detail/Detail";
 import Cart from "@/pages/Cart/Cart";
+import Favorites from "@/pages/Favorites/Favorites";
 
 import PrivateRoute from "./privateRoutes";
 import PublicRoute from "./publicRoutes";
@@ -56,6 +57,16 @@ export const router = createBrowserRouter([
               {
                 index: true,
                 Component: Cart,
+              },
+            ],
+          },
+          {
+            path: "favorites",
+            Component: PrivateRoute,
+            children: [
+              {
+                index: true,
+                Component: Favorites,
               },
             ],
           },

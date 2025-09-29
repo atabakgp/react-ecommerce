@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, connectAuthEmulator } from "firebase/auth";
+import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -13,11 +14,17 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
 
-// Use emulator if in development mode
+// Auth
+const auth = getAuth(app);
 if (import.meta.env.MODE === "development") {
   connectAuthEmulator(auth, "http://localhost:9099");
 }
 
-export { auth };
+// Firestore
+const db = getFirestore(app);
+if (import.meta.env.MODE === "development") {
+  connectFirestoreEmulator(db, "localhost", 8080); // default port
+}
+
+export { auth, db };

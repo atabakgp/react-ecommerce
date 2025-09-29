@@ -37,6 +37,9 @@ function Header() {
         <div className="basket-count">
           <Link to="/cart">Cart ({totalQuantity})</Link>
         </div>
+        <div className="basket-count">
+          <Link to="/favorites">Favorites</Link>
+        </div>
         <ul className="header-menu">
           {!user ? (
             <>
