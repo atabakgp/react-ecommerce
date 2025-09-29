@@ -32,7 +32,9 @@ A simple e-commerce web app built with React and Firebase Authentication. Produc
 ### Prerequisites
 
 - Node.js (v16+ recommended)
-- Firebase project with Authentication enabled  
+- Firebase project with Authentication enabled
 - Firebase CLI installed (optional):
   ```bash
   npm install -g firebase-tools
+  firebase emulators:start
+  ```

@@ -4,12 +4,10 @@ import { useUser } from "../../context/UserContext";
 import { updateUserEmail } from "../../services/profileServices";
 import { useToast } from "../../context/ToastContext";
 
-
 function EmailForm() {
   const [error, setError] = useState("");
   const { user, setUser } = useUser();
   const { showToast } = useToast();
-
 
   const {
     register,
@@ -37,7 +35,6 @@ function EmailForm() {
         email,
       }));
       showToast("Email updated successfully!", "success");
-
     } catch (error: any) {
       setError(error.message);
     }

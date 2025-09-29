@@ -1,13 +1,9 @@
 import { useState, useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useUser } from "../../context/UserContext";
-import {
-  updateUserProfile,
-  updateUserEmail,
-} from "../../services/profileServices";
+import { updateUserProfile } from "../../services/profileServices";
 
 import { useToast } from "../../context/ToastContext";
-
 
 function ProfileForm() {
   const [error, setError] = useState("");

@@ -17,6 +17,7 @@ export const useFetchCategories = () => {
   return useQuery({
     queryKey: ["categories"],
     queryFn: getCategories,
+    staleTime: 1000 * 60 * 5,
   });
 };
 
@@ -24,6 +25,7 @@ export const useFetchProductsByCategory = (categorySlug: string) => {
   return useQuery({
     queryKey: ["productsByCategory", categorySlug],
     queryFn: () => getProductsByCategory(categorySlug),
+    staleTime: 1000 * 60 * 5,
   });
 };
 

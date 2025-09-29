@@ -1,9 +1,13 @@
 import { useState, useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useUser } from "../../context/UserContext";
 import { changePassword } from "../../services/profileServices";
 import { useToast } from "../../context/ToastContext";
 
+type ChangePasswordForm = {
+  currentPassword: string;
+  newPassword: string;
+  confirmNewPassword: string;
+};
 function ChangePasswordForm() {
   const [error, setError] = useState("");
   const { showToast } = useToast();
@@ -13,11 +17,7 @@ function ChangePasswordForm() {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<{
-    currentPassword: string;
-    newPassword: string;
-    confirmNewPassword: string;
-  }>();
+  } = useForm<ChangePasswordForm>();
 
   const handleChangePassword: SubmitHandler<{
     currentPassword: string;
@@ -33,7 +33,6 @@ function ChangePasswordForm() {
       showToast("Password updated successfully", "success");
       setError("");
       reset();
-
     } catch (error: any) {
       setError(error.message);
     }
@@ -47,7 +46,9 @@ function ChangePasswordForm() {
           <label>Current Password</label>
           <input
             type="password"
-            className={`form-control ${errors.currentPassword ? "is-invalid" : ""}`}
+            className={`form-control ${
+              errors.currentPassword ? "is-invalid" : ""
+            }`}
             {...register("currentPassword", {
               required: "password is required",
             })}
@@ -88,7 +89,6 @@ function ChangePasswordForm() {
           )}
         </div>
         {error && <div className="alert alert-danger">{error}</div>}
-
 
         <button type="submit" className="btn btn-success w-100">
           Change Password
