@@ -4,6 +4,7 @@ import {
   getCategories,
   getProductsByCategory,
   getProductById,
+  searchProducts,
 } from "@/services/productService";
 
 export const useProducts = (limit?: number, skip?: number) => {
@@ -43,5 +44,13 @@ export const useFetchProductById = (productId?: number | string) => {
     queryKey: ["product", productId],
     queryFn: () => getProductById(productId as number | string),
     enabled: Boolean(productId),
+  });
+};
+
+export const useSearchProducts = (query: string) => {
+  return useQuery({
+    queryKey: ["query", query],
+    queryFn: () => searchProducts(query),
+    enabled: query.length > 0,
   });
 };

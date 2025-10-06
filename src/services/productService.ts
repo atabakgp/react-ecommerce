@@ -33,3 +33,14 @@ export const getProductById = async (
   const res = await productAPI.get(`/products/${productId}`);
   return res.data;
 };
+
+export const searchProducts = async (
+  query: string
+): Promise<IProductsResponse> => {
+  const res = await productAPI.get("products/search", {
+    params: {
+      q: query,
+    },
+  });
+  return res.data;
+};

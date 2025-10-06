@@ -1,9 +1,8 @@
-
 .header {
   display: flex;
   align-items: center;
   padding: 16px 0;
-  background-color: #FF6F61;
+  background-color: #ff6f61;
 
   .container {
     display: flex;
@@ -11,13 +10,10 @@
     justify-content: space-between;
     .logo {
       color: #fff;
-
     }
     .search-bar {
-      flex: 0.5;
-    }
-    a {
-      color: #fff;
+      flex: 0.8;
+      position: relative;
     }
     .header-menu {
       display: flex;
