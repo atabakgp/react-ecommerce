@@ -58,7 +58,7 @@ export const FavoriteProvider = ({ children }: ProviderProps) => {
 
   const toggleFavorite = async (productId: number) => {
     if (!auth.currentUser) return;
-    const userId = auth.currentUser.uid;
+    const userId = auth?.currentUser?.uid;
     const userDocRef = doc(db, "users", userId);
     try {
       if (favoriteIds.includes(productId)) {

@@ -1,15 +1,17 @@
 import { IProduct } from "@/interfaces/products";
 import "./ProductItem.scss";
 import StarRating from "./StarRating";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaHeart, FaRegHeart } from "react-icons/fa6";
 import { useFavoritesContext } from "@/context/FavoriteContext";
+import { auth } from "@/firebase/firebase";
 
 interface IProductItemProps {
   product: IProduct;
 }
 
 const ProductItem = ({ product }: IProductItemProps) => {
+  const navigate = useNavigate();
   const { isFavorite, toggleFavorite } = useFavoritesContext();
 
   const slugGenerator = (text: string): string => {
@@ -28,6 +30,7 @@ const ProductItem = ({ product }: IProductItemProps) => {
   ): void => {
     event.preventDefault();
     event.stopPropagation();
+    if (!auth.currentUser) navigate("/login");
     toggleFavorite(productId);
   };
 
