@@ -9,7 +9,8 @@ import SearchDropdown from "@/components/SearchDropDown/SearchDropDown";
 
 function Header() {
   const [query, setQuery] = useState("");
-  const { data: searchProducts } = useSearchProducts(query);
+  const [debouncedQuery, setDebouncedQuery] = useState(""); // New state for debounced query
+  const { data: searchProducts } = useSearchProducts(debouncedQuery);
   const [showDropdown, setShowDropdown] = useState(false);
   const { user, setUser } = useUser();
   const { cart } = useCart();
@@ -33,7 +34,16 @@ function Header() {
     setShowDropdown(value.length > 0);
   };
 
-  // Hide dropdown when clicking outside
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedQuery(query);
+    }, 500);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [query]);
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
