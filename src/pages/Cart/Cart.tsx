@@ -3,9 +3,16 @@ import "./Cart.scss";
 import { useCart } from "@/context/CartContext";
 import { Link } from "react-router-dom";
 import { Cart, CartItem } from "@/interfaces/cart";
+import { useNavigate } from "react-router-dom";
 
 const CartPage = () => {
+  const navigate = useNavigate();
   const { cart, removeItem, updateQuantity, clearCart } = useCart();
+
+  const proceedToCheckout = () => {
+    // Navigate to checkout page
+    navigate("/checkout");
+  };
 
   const handleQuantityChange = (productId: number, quantity: number) => {
     if (quantity < 1) return;
@@ -90,7 +97,9 @@ const CartPage = () => {
       <div className="cart-total mt-4 fs-4 fw-bold">
         Total: ${total.toFixed(2)}
       </div>
-      <button className="btn btn-success mt-3">Proceed to Checkout</button>
+      <button className="btn btn-success mt-3" onClick={proceedToCheckout}>
+        Proceed to Checkout
+      </button>
     </div>
   );
 };
