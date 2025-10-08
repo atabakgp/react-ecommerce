@@ -3,6 +3,9 @@ import { useCart } from "@/context/CartContext";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import "./Checkout.scss";
+import { useUser } from "@/context/UserContext";
+import { saveUserOrder } from "@/services/ordersService";
+import { auth } from "@/firebase/firebase";
 
 interface FormData {
   name: string;
@@ -12,6 +15,7 @@ interface FormData {
 
 const Checkout = () => {
   const { cart, clearCart } = useCart();
+  const { user } = useUser();
   const navigate = useNavigate();
   const {
     register,
@@ -25,10 +29,37 @@ const Checkout = () => {
     0
   );
 
-  const onSubmit = (data: FormData) => {
-    clearCart();
-    reset();
-    navigate("/checkout/success");
+  const onSubmit = async (data: FormData) => {
+    // Build order payload
+    const orderItems = cart.items.map((item) => ({
+      productId: item.productId,
+      name: item.name,
+      price: item.price,
+      quantity: item.quantity,
+    }));
+
+    const order = {
+      items: orderItems,
+      totalAmount,
+      shipping: {
+        name: data.name,
+        email: data.email,
+        address: data.address,
+      },
+    };
+
+    try {
+      const uid = auth.currentUser?.uid;
+      if (uid) {
+        await saveUserOrder(uid, order);
+      }
+    } catch (e) {
+      console.error("Failed to save order:", e);
+    } finally {
+      clearCart();
+      reset();
+      navigate("/checkout/success");
+    }
   };
 
   return (

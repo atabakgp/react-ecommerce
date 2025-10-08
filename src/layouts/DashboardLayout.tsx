@@ -21,6 +21,13 @@ const DashboardLayout = () => {
             >
               Profile
             </NavLink>
+
+            <NavLink
+              to="/dashboard/orders"
+              className={({ isActive }) => (isActive ? "active" : "")}
+            >
+              Orders
+            </NavLink>
           </nav>
           <div className="col-lg-9">
             <Outlet />

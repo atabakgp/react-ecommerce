@@ -6,8 +6,8 @@ import {
   ReactNode,
 } from "react";
 import { Cart, CartItem } from "../interfaces/cart";
-import { doc, setDoc, getDoc } from "firebase/firestore";
-import { auth, db } from "../firebase/firebase";
+import { auth } from "../firebase/firebase";
+import { saveCartToFirestore as saveCartDoc, getCartFromFirestore } from "@/services/cartService";
 import { onAuthStateChanged } from "firebase/auth";
 
 type ProviderProps = {
@@ -35,14 +35,8 @@ export const CartProvider = ({ children }: ProviderProps) => {
       return;
     const userId = auth.currentUser.uid;
     const email = auth.currentUser.email;
-    const userDocRef = doc(db, "users", userId);
-
     try {
-      await setDoc(
-        userDocRef,
-        { email, cartItems: updatedItems },
-        { merge: true }
-      );
+      await saveCartDoc(userId, email, updatedItems);
     } catch (error) {
       console.error("Failed to update cart in Firestore:", error);
     }
@@ -86,13 +80,9 @@ export const CartProvider = ({ children }: ProviderProps) => {
         return;
       }
 
-      const userDocRef = doc(db, "users", user.uid);
-
       try {
-        const docSnap = await getDoc(userDocRef);
-        if (docSnap.exists()) {
-          const data = docSnap.data();
-          const firestoreCart: CartItem[] = data.cartItems || [];
+        const firestoreCart: CartItem[] = await getCartFromFirestore(user.uid);
+        if (firestoreCart.length > 0 || guestCart.length > 0) {
           const mergedCart = mergeCarts(guestCart, firestoreCart);
 
           setCart({ items: mergedCart });

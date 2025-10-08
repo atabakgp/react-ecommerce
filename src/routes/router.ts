@@ -12,6 +12,7 @@ import Home from "@/pages/Home";
 import Login from "@/pages/Login/Login";
 import Register from "@/pages/Register/Register";
 import Dashboard from "@/pages/Dashboard/Dashboard";
+import Orders from "@/pages/Dashboard/Orders";
 import Profile from "@/pages/Profile/Profile";
 import Listing from "@/pages/Listing/Listing";
 import Detail from "@/pages/Detail/Detail";
@@ -120,6 +121,10 @@ export const router = createBrowserRouter([
               {
                 path: "profile",
                 Component: Profile,
+              },
+              {
+                path: "orders",
+                Component: Orders,
               },
             ],
           },
