@@ -21,9 +21,16 @@ export const getCategories = async (): Promise<ICategoryItem[]> => {
 };
 
 export const getProductsByCategory = async (
-  categorySlug: string
+  categorySlug: string,
+  limit: number = 12,
+  skip: number = 0
 ): Promise<IProductsResponse> => {
-  const res = await productAPI.get("/products/category/" + categorySlug);
+  const res = await productAPI.get("/products/category/" + categorySlug, {
+    params: {
+      limit: Number(limit),
+      skip: Number(skip),
+    },
+  });
   return res.data;
 };
 

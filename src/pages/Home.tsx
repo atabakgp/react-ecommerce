@@ -3,16 +3,22 @@ import ProductList from "../components/Product/ProductList/ProductList";
 import "./Home.scss";
 import Categories from "@/components/Categories/Categories";
 import { ICategoryItem } from "@/interfaces/categories";
-import { useRouteLoaderData } from "react-router-dom";
+import { useRouteLoaderData, useSearchParams } from "react-router-dom";
 
 const Home = () => {
-  const { isPending, error, data } = useProducts(15);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const pageParam = Number(searchParams.get("page") || 1);
+  const pageSize = 20; // 20 per page as requested
+  const skip = (pageParam - 1) * pageSize;
+
+  const { isPending, error, data } = useProducts(pageSize, skip);
   const categories = useRouteLoaderData("mainLayout") as ICategoryItem[];
 
   if (isPending) return;
   if (error) return "An error has occurred: " + error.message;
 
-  const newArrivals = data.products.slice(0, 30);
+  const newArrivals = data.products; // server returns page-size items
+  const total = data.total || 0;
 
   return (
     <div className="home">
@@ -21,7 +27,7 @@ const Home = () => {
       </div>
       <div className="container">
         <div className="home-page-products">
-          <ProductList title="New Arrivals" products={newArrivals} />
+          <ProductList title="New Arrivals" products={newArrivals} total={total} pageSize={pageSize} />
         </div>
       </div>
     </div>

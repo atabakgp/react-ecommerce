@@ -38,6 +38,10 @@ export const router = createBrowserRouter([
       {
         Component: MainLayout,
         loader: fetchCategoriesLoader,
+        shouldRevalidate: ({ currentUrl, nextUrl }) => {
+          // Avoid refetching categories when only the search params (e.g., ?page=) change
+          return currentUrl.pathname !== nextUrl.pathname;
+        },
         id: "mainLayout",
         children: [
           {

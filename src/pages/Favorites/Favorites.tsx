@@ -3,9 +3,13 @@ import { useFavoritesContext } from "@/context/FavoriteContext";
 import { getProductById } from "@/services/productService";
 import { IProduct } from "@/interfaces/products";
 import ProductList from "@/components/Product/ProductList/ProductList";
+import { useSearchParams } from "react-router-dom";
 
 const Favorites = () => {
   const { favoriteIds } = useFavoritesContext();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const pageParam = Number(searchParams.get("page") || 1);
+  const pageSize = 20; // 20 per page as requested
 
   // run one query per favoriteId
   const results = useQueries({
@@ -26,6 +30,11 @@ const Favorites = () => {
     .map((r) => (r.isSuccess ? r.data : null))
     .filter(Boolean) as IProduct[];
 
+  const totalPages = Math.max(1, Math.ceil(products.length / pageSize));
+  const start = (pageParam - 1) * pageSize;
+  const end = start + pageSize;
+  const pageItems = products.slice(start, end);
+
   return (
     <div className="container favorites-page">
       {isLoading && <p>Loading favorites...</p>}
@@ -35,7 +44,7 @@ const Favorites = () => {
       )}
 
       {products.length > 0 && (
-        <ProductList title="My Favorites" products={products} />
+        <ProductList title="My Favorites" products={pageItems} total={products.length} pageSize={pageSize} />
       )}
     </div>
   );

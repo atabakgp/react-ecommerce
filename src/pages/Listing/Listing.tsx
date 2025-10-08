@@ -1,5 +1,5 @@
 import "./Listing.scss";
-import { useRouteLoaderData, useParams } from "react-router-dom";
+import { useRouteLoaderData, useParams, useSearchParams } from "react-router-dom";
 import Categories from "@/components/Categories/Categories";
 import { ICategoryItem } from "@/interfaces/categories";
 import { useFetchProductsByCategory } from "@/hooks/products/useProducts";
@@ -10,11 +10,18 @@ interface ListingProps {}
 const Listing = () => {
   const categories = useRouteLoaderData("mainLayout") as ICategoryItem[];
   let categorySlug = useParams().categorySlug as string;
+  const [searchParams, setSearchParams] = useSearchParams();
+  const pageParam = Number(searchParams.get("page") || 1);
+  const limit = 20; // 20 per page as requested
+  const skip = (pageParam - 1) * limit;
+
   const {
     data: productsByCategory,
     isPending,
     error,
-  } = useFetchProductsByCategory(categorySlug);
+  } = useFetchProductsByCategory(categorySlug, limit, skip);
+
+  const total = productsByCategory?.total || 0;
 
   return (
     <div className="products-listing">
@@ -26,7 +33,7 @@ const Listing = () => {
           </div>
           <div className="col-lg-10">
             {isPending && <div>Loading...</div>}
-            <ProductList products={productsByCategory?.products} />
+            <ProductList products={productsByCategory?.products} total={total} pageSize={limit} />
           </div>
         </div>
       </div>

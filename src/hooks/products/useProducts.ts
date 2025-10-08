@@ -31,10 +31,14 @@ export const useFetchCategories = () => {
   });
 };
 
-export const useFetchProductsByCategory = (categorySlug: string) => {
+export const useFetchProductsByCategory = (
+  categorySlug: string,
+  limit: number = 30,
+  skip: number = 0
+) => {
   return useQuery({
-    queryKey: ["productsByCategory", categorySlug],
-    queryFn: () => getProductsByCategory(categorySlug),
+    queryKey: ["productsByCategory", categorySlug, limit, skip],
+    queryFn: () => getProductsByCategory(categorySlug, limit, skip),
     staleTime: 1000 * 60 * 5,
   });
 };
