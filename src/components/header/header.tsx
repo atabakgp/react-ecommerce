@@ -5,7 +5,7 @@ import { useUser } from "@/context/UserContext";
 import { useCart } from "@/context/CartContext";
 import { authService } from "@/services/auth/authService";
 import SearchBar from "./searchBar";
-import CartLinks from "./cartlinks";
+import CartLinks from "./cartLinks";
 import UserMenu from "./userMenu";
 
 function Header() {
@@ -27,7 +27,7 @@ function Header() {
 
   return (
     <header className="header">
-      <div className="container d-flex align-items-center justify-content-between">
+      <div className="container m-auto">
         <div className="logo">
           <Link to="/">Website Logo</Link>
         </div>

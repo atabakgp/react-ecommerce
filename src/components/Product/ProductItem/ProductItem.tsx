@@ -35,9 +35,13 @@ const ProductItem = ({ product }: IProductItemProps) => {
   };
 
   return (
-    <Link className="col-lg-2 product-item" to={urlGenerator(product)}>
+    <Link className="product-item" to={urlGenerator(product)}>
       <div className="product-image">
-        <img src={product.thumbnail} alt={product.title} />
+        <img
+          src={product.thumbnail}
+          alt={product.title}
+          className="w-full h-full object-contain"
+        />
       </div>
       <div className="product-content">
         <div className="product-title">{product.title}</div>

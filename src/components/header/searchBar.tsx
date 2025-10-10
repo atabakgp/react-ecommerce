@@ -10,13 +10,13 @@ const SearchBar = () => {
   const searchRef = useRef<HTMLDivElement>(null);
   const products = searchProducts?.products || [];
 
-  // debounce search
+  // Debounce search
   useEffect(() => {
     const handler = setTimeout(() => setDebouncedQuery(query), 500);
     return () => clearTimeout(handler);
   }, [query]);
 
-  // close on click outside
+  // Close on click outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -31,10 +31,13 @@ const SearchBar = () => {
   }, []);
 
   return (
-    <div className="search-bar position-relative" ref={searchRef}>
+    <div
+      className="relative w-full max-w-md bg-white rounded-md"
+      ref={searchRef}
+    >
       <input
         type="text"
-        className="form-control"
+        className="w-full border border-gray-300 px-4 py-2 focus:outline-none"
         placeholder="Search products..."
         value={query}
         onChange={(e) => {

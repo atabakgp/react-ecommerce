@@ -25,14 +25,8 @@ const Home = () => {
       <div className="home-page-categories">
         <Categories categories={categories.slice(0, 12)} />
       </div>
-      <div className="container">
-        <div className="home-page-products">
-          <ProductList
-            products={newArrivals}
-            total={total}
-            pageSize={pageSize}
-          />
-        </div>
+      <div className="container mx-auto">
+        <ProductList products={newArrivals} total={total} pageSize={pageSize} />
       </div>
     </div>
   );

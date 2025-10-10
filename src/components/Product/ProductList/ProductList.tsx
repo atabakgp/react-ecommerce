@@ -20,9 +20,9 @@ const ProductList = ({
   const totalPages =
     total && pageSize ? Math.max(1, Math.ceil(total / pageSize)) : undefined;
   return (
-    <section className="product-list">
+    <section className="container mx-auto my-5 product-list">
       {title && <h2 className="product-list__title">{title}</h2>}
-      <div className="row">
+      <div className="grid grid-cols-2 md:grid-cols-6 gap-5">
         {products &&
           products.map((product) => (
             <ProductItem key={product.id} product={product} />

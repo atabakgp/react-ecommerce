@@ -1,8 +1,6 @@
-import { Routes, Route } from "react-router-dom";
 import { Outlet } from "react-router";
 import Header from "@/components/header/header";
-import "./App.scss";
-import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap/dist/css/bootstrap.min.css";
 import useAuthObserver from "./hooks/auth/useAuthObserver";
 import Spinner from "./components/spinner/spinner";
 import { useLoading } from "./context/LoadingContext";

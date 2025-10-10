@@ -40,7 +40,7 @@ function Categories({ categories, mode }: CategoriesListProps) {
 
   return (
     <nav className="categories-list navbar-category-list">
-      <div className="container">
+      <div className="container mx-auto">
         <ul className="nav-links">{renderCategoryItems()}</ul>
       </div>
     </nav>
