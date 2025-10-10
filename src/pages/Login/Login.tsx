@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { loginUser } from "../../services/auth/authServices";
+import { authService } from "@/services/auth/authService";
 import { useUser } from "../../context/UserContext";
 import { useLoading } from "../../context/LoadingContext";
 
@@ -20,16 +20,11 @@ function Login() {
   } = useForm<Login>();
 
   const { setUser } = useUser();
-  const { setLoading } = useLoading();
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<Login> = async (data) => {
     try {
-      const userCredential = await loginUser(
-        data.email,
-        data.password,
-        setLoading
-      );
+      const userCredential = await authService.login(data.email, data.password);
 
       const firebaseUser = userCredential.user;
       const accessToken = await firebaseUser.getIdToken();

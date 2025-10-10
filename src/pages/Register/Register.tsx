@@ -1,9 +1,9 @@
 import axios from "axios";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import { registerUser } from "../../services/auth/authServices";
+import { authService } from "@/services/auth/authService";
 import { useState } from "react";
-import { useUser } from "../../context/UserContext";
+import { useUser } from "@/context/UserContext";
 
 type Register = {
   name: string;
@@ -25,7 +25,7 @@ function Register() {
 
   const onSubmit: SubmitHandler<Register> = async (data) => {
     try {
-      const userCredential = await registerUser(
+      const userCredential = await authService.register(
         data.email,
         data.password,
         data.name

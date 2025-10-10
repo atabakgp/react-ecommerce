@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useUser } from "../../context/UserContext";
-import { updateUserEmail } from "../../services/profile/profileService";
+import { profileService } from "@/services/profile/profileService";
 import { useToast } from "../../context/ToastContext";
 
 function EmailForm() {
@@ -28,7 +28,9 @@ function EmailForm() {
 
   const updateEmail: SubmitHandler<{ email: string }> = async (data) => {
     try {
-      const firebaseUser = await updateUserEmail(data.email);
+      const firebaseUser = await profileService.updateUserEmail({
+        email: data.email,
+      });
       const email = firebaseUser.email;
       setUser((prev) => ({
         ...prev,

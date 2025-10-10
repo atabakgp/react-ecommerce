@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useUser } from "../../context/UserContext";
-import { updateUserProfile } from "../../services/profile/profileService";
+import { profileService } from "@/services/profile/profileService";
 
 import { useToast } from "../../context/ToastContext";
 
@@ -10,7 +10,6 @@ function ProfileForm() {
   const { user, setUser } = useUser();
   const { showToast } = useToast();
 
-  // Form 1: Profile (Display Name)
   const {
     register: registerProfile,
     handleSubmit: handleProfileSubmit,
@@ -22,28 +21,17 @@ function ProfileForm() {
     },
   });
 
-  // Form 2: Email
-  const {
-    register: registerEmail,
-    handleSubmit: handleEmailSubmit,
-    formState: { errors: emailErrors },
-    reset: resetEmail,
-  } = useForm<{ email: string }>({
-    defaultValues: {
-      email: "",
-    },
-  });
-
   useEffect(() => {
     if (user) {
       resetProfile({ name: user.displayName ?? "" });
-      resetEmail({ email: user.email ?? "" });
     }
-  }, [user, resetProfile, resetEmail]);
+  }, [user, resetProfile]);
 
   const updateProfile: SubmitHandler<{ name: string }> = async (data) => {
     try {
-      const firebaseUser = await updateUserProfile(data.name);
+      const firebaseUser = await profileService.updateUserProfile({
+        displayName: data.name,
+      });
       const displayName = firebaseUser.displayName;
       setUser((prev) => ({
         ...prev,

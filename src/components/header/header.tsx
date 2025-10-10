@@ -1,7 +1,7 @@
 import "./Header.scss";
 import { Link } from "react-router-dom";
 import { useUser } from "@/context/UserContext";
-import { logoutUser } from "@/services/auth/authServices";
+import { authService } from "@/services/auth/authService";
 import { useCart } from "@/context/CartContext";
 import { useState, useRef, useEffect } from "react";
 import { useSearchProducts } from "@/hooks/products/useProducts";
@@ -22,7 +22,7 @@ function Header() {
 
   const handleLogout = async () => {
     try {
-      await logoutUser();
+      await authService.logout();
       setUser(null);
     } catch (error) {
       console.log(error);

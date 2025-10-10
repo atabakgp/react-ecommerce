@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { changePassword } from "../../services/profile/profileService";
-import { useToast } from "../../context/ToastContext";
+import { profileService } from "@/services/profile/profileService";
+import { useToast } from "@/context/ToastContext";
 
 type ChangePasswordForm = {
   currentPassword: string;
@@ -29,7 +29,10 @@ function ChangePasswordForm() {
         setError("Passwords do not match");
         return;
       }
-      await changePassword(data.currentPassword, data.newPassword);
+      await profileService.changePassword({
+        currentPassword: data.currentPassword,
+        newPassword: data.newPassword,
+      });
       showToast("Password updated successfully", "success");
       setError("");
       reset();

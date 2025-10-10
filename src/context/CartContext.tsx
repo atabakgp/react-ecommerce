@@ -5,7 +5,7 @@ import {
   useEffect,
   ReactNode,
 } from "react";
-import { Cart, CartItem } from "../interfaces/cart";
+import { Cart, CartItem } from "@/interfaces/cart";
 import { auth } from "../firebase/firebase";
 import {
   saveCartToFirestore as saveCartDoc,
