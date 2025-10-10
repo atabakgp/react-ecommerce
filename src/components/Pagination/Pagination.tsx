@@ -9,7 +9,11 @@ interface PaginationProps {
 
 const MAX_VISIBLE_PAGES = 5;
 
-const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPageChange }) => {
+const Pagination: React.FC<PaginationProps> = ({
+  currentPage,
+  totalPages,
+  onPageChange,
+}) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const urlPage = Number(searchParams.get("page") || 1);
   const activePage = currentPage ?? urlPage;
@@ -18,14 +22,10 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
 
   const createPageArray = (): (number | string)[] => {
     const pages: (number | string)[] = [];
-
     const visible = Math.min(MAX_VISIBLE_PAGES, totalPages);
     const half = Math.floor(visible / 2);
-
     let start = Math.max(1, activePage - half);
     let end = Math.min(totalPages, start + visible - 1);
-
-    // Adjust start if we are at the end
     start = Math.max(1, end - visible + 1);
 
     if (start > 1) {
@@ -61,29 +61,56 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
   const handleNext = () => updateUrlPage(Math.min(totalPages, activePage + 1));
 
   return (
-    <nav aria-label="Product pagination">
-      <ul className="pagination justify-content-center my-4">
-        <li className={`page-item ${activePage === 1 ? "disabled" : ""}`}>
-          <button className="page-link" onClick={handlePrev} aria-label="Previous">
+    <nav aria-label="Product pagination" className="flex justify-center my-6">
+      <ul className="flex gap-2">
+        {/* Previous button */}
+        <li>
+          <button
+            onClick={handlePrev}
+            disabled={activePage === 1}
+            className={`px-3 py-1 rounded ${
+              activePage === 1
+                ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+                : "bg-blue-500 text-white hover:bg-blue-600"
+            }`}
+          >
             Previous
           </button>
         </li>
-        {pages.map((p, idx) => (
-          <li
-            key={`${p}-${idx}`}
-            className={`page-item ${p === activePage ? "active" : ""} ${p === "..." ? "disabled" : ""}`}
-          >
-            {p === "..." ? (
-              <span className="page-link">…</span>
-            ) : (
-              <button className="page-link" onClick={() => updateUrlPage(p as number)}>
+
+        {/* Page numbers */}
+        {pages.map((p, idx) =>
+          p === "..." ? (
+            <li key={`ellipsis-${idx}`}>
+              <span className="px-3 py-1 text-gray-500 select-none">…</span>
+            </li>
+          ) : (
+            <li key={`${p}-${idx}`}>
+              <button
+                onClick={() => updateUrlPage(p as number)}
+                className={`px-3 py-1 rounded ${
+                  p === activePage
+                    ? "bg-blue-600 text-white"
+                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                }`}
+              >
                 {p}
               </button>
-            )}
-          </li>
-        ))}
-        <li className={`page-item ${activePage === totalPages ? "disabled" : ""}`}>
-          <button className="page-link" onClick={handleNext} aria-label="Next">
+            </li>
+          )
+        )}
+
+        {/* Next button */}
+        <li>
+          <button
+            onClick={handleNext}
+            disabled={activePage === totalPages}
+            className={`px-3 py-1 rounded ${
+              activePage === totalPages
+                ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+                : "bg-blue-500 text-white hover:bg-blue-600"
+            }`}
+          >
             Next
           </button>
         </li>
@@ -93,5 +120,3 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
 };
 
 export default Pagination;
-
-

@@ -15,9 +15,7 @@ function EmailForm() {
     formState: { errors: emailErrors },
     reset,
   } = useForm<{ email: string }>({
-    defaultValues: {
-      email: "",
-    },
+    defaultValues: { email: "" },
   });
 
   useEffect(() => {
@@ -32,39 +30,51 @@ function EmailForm() {
         email: data.email,
       });
       const email = firebaseUser.email;
-      setUser((prev) => ({
-        ...prev,
-        email,
-      }));
+      setUser((prev) => ({ ...prev, email }));
       showToast("Email updated successfully!", "success");
+      setError("");
     } catch (error: any) {
       setError(error.message);
     }
   };
 
   return (
-    <>
-      <h4 className="mt-4">Update Email</h4>
-      <form onSubmit={handleSubmit(updateEmail)}>
-        {error && <div className="alert alert-danger">{error}</div>}
+    <div className="max-w-md bg-white p-6 rounded-lg shadow-md">
+      <form
+        onSubmit={handleSubmit(updateEmail)}
+        className="flex flex-col gap-4"
+      >
+        {/* Error message */}
+        {error && <p className="text-red-600 font-medium">{error}</p>}
 
-        <div className="mb-3">
-          <label>Email address</label>
+        {/* Email input */}
+        <div>
+          <label className="block mb-1 font-medium text-gray-700">
+            Email address
+          </label>
           <input
             type="email"
-            className={`form-control ${emailErrors.email ? "is-invalid" : ""}`}
             {...register("email", { required: "Email is required" })}
+            className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition ${
+              emailErrors.email ? "border-red-500" : "border-gray-300"
+            }`}
           />
           {emailErrors.email && (
-            <div className="invalid-feedback">{emailErrors.email.message}</div>
+            <p className="text-red-500 text-sm mt-1">
+              {emailErrors.email.message}
+            </p>
           )}
         </div>
 
-        <button type="submit" className="btn btn-success w-100">
+        {/* Submit button */}
+        <button
+          type="submit"
+          className="w-full py-2 px-4 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-md transition"
+        >
           Update Email
         </button>
       </form>
-    </>
+    </div>
   );
 }
 

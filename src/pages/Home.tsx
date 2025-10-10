@@ -26,7 +26,12 @@ const Home = () => {
         <Categories categories={categories.slice(0, 12)} />
       </div>
       <div className="container mx-auto">
-        <ProductList products={newArrivals} total={total} pageSize={pageSize} />
+        <ProductList
+          products={newArrivals}
+          total={total}
+          pageSize={pageSize}
+          mdCols={6}
+        />
       </div>
     </div>
   );

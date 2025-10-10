@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { profileService } from "@/services/profile/profileService";
 import { useToast } from "@/context/ToastContext";
@@ -8,6 +8,7 @@ type ChangePasswordForm = {
   newPassword: string;
   confirmNewPassword: string;
 };
+
 function ChangePasswordForm() {
   const [error, setError] = useState("");
   const { showToast } = useToast();
@@ -19,20 +20,20 @@ function ChangePasswordForm() {
     formState: { errors },
   } = useForm<ChangePasswordForm>();
 
-  const handleChangePassword: SubmitHandler<{
-    currentPassword: string;
-    newPassword: string;
-    confirmNewPassword: string;
-  }> = async (data) => {
+  const handleChangePassword: SubmitHandler<ChangePasswordForm> = async (
+    data
+  ) => {
     try {
-      if (data.newPassword != data.confirmNewPassword) {
+      if (data.newPassword !== data.confirmNewPassword) {
         setError("Passwords do not match");
         return;
       }
+
       await profileService.changePassword({
         currentPassword: data.currentPassword,
         newPassword: data.newPassword,
       });
+
       showToast("Password updated successfully", "success");
       setError("");
       reset();
@@ -42,62 +43,85 @@ function ChangePasswordForm() {
   };
 
   return (
-    <>
-      <h4 className="mt-4">Change Password</h4>
-      <form onSubmit={handleSubmit(handleChangePassword)}>
-        <div className="mb-3">
-          <label>Current Password</label>
+    <div className="max-w-md bg-white p-6 rounded-lg shadow-md">
+      <h4 className="text-xl font-semibold mb-4">Change Password</h4>
+      <form
+        onSubmit={handleSubmit(handleChangePassword)}
+        className="flex flex-col gap-4"
+      >
+        {/* Current Password */}
+        <div>
+          <label className="block mb-1 font-medium text-gray-700">
+            Current Password
+          </label>
           <input
             type="password"
-            className={`form-control ${
-              errors.currentPassword ? "is-invalid" : ""
-            }`}
             {...register("currentPassword", {
-              required: "password is required",
+              required: "Password is required",
             })}
+            className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition ${
+              errors.currentPassword ? "border-red-500" : "border-gray-300"
+            }`}
           />
           {errors.currentPassword && (
-            <div className="invalid-feedback">
+            <p className="text-red-500 text-sm mt-1">
               {errors.currentPassword.message}
-            </div>
+            </p>
           )}
         </div>
-        <div className="mb-3">
-          <label>New Password</label>
+
+        {/* New Password */}
+        <div>
+          <label className="block mb-1 font-medium text-gray-700">
+            New Password
+          </label>
           <input
             type="password"
-            className={`form-control ${errors.newPassword ? "is-invalid" : ""}`}
-            {...register("newPassword", { required: "password is required" })}
+            {...register("newPassword", { required: "Password is required" })}
+            className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition ${
+              errors.newPassword ? "border-red-500" : "border-gray-300"
+            }`}
           />
           {errors.newPassword && (
-            <div className="invalid-feedback">{errors.newPassword.message}</div>
+            <p className="text-red-500 text-sm mt-1">
+              {errors.newPassword.message}
+            </p>
           )}
         </div>
 
-        <div className="mb-3">
-          <label>Confirm New Password</label>
+        {/* Confirm New Password */}
+        <div>
+          <label className="block mb-1 font-medium text-gray-700">
+            Confirm New Password
+          </label>
           <input
             type="password"
-            className={`form-control ${
-              errors.confirmNewPassword ? "is-invalid" : ""
-            }`}
             {...register("confirmNewPassword", {
-              required: "password is required",
+              required: "Password is required",
             })}
+            className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition ${
+              errors.confirmNewPassword ? "border-red-500" : "border-gray-300"
+            }`}
           />
           {errors.confirmNewPassword && (
-            <div className="invalid-feedback">
+            <p className="text-red-500 text-sm mt-1">
               {errors.confirmNewPassword.message}
-            </div>
+            </p>
           )}
         </div>
-        {error && <div className="alert alert-danger">{error}</div>}
 
-        <button type="submit" className="btn btn-success w-100">
+        {/* Error message */}
+        {error && <p className="text-red-600 font-medium">{error}</p>}
+
+        {/* Submit button */}
+        <button
+          type="submit"
+          className="w-full py-2 px-4 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-md transition"
+        >
           Change Password
         </button>
       </form>
-    </>
+    </div>
   );
 }
 

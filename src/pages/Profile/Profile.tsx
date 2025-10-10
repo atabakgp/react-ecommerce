@@ -1,25 +1,22 @@
-import "./Profile.scss";
 import ProfileForm from "../../components/profile/profileForm";
 import EmailForm from "../../components/profile/emailForm";
 import ChangePasswordForm from "../../components/profile/changePasswordForm";
 
 function Profile() {
   return (
-    <div className="profile">
-      <div className="container">
-        <div className="profile-container">
-          <div>
-            <ProfileForm />
-          </div>
-          <div>
-            <EmailForm />
-          </div>
-          <div>
-            <ChangePasswordForm />
-          </div>
-        </div>
+    <div className="min-h-screen py-8">
+      <div className="grid grid-cols-2 gap-8">
+        {/* Profile Form */}
+        <ProfileForm />
+
+        {/* Email Form */}
+        <EmailForm />
+
+        {/* Change Password Form */}
+        <ChangePasswordForm />
       </div>
     </div>
   );
 }
+
 export default Profile;

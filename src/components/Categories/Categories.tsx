@@ -1,50 +1,47 @@
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { ICategoryItem } from "../../interfaces/categories";
-import "./Categories.scss";
 
 interface CategoriesListProps {
   categories: ICategoryItem[];
-  mode?: "normal" | "sidebar" | "dropdown";
+  mode?: "normal" | "sidebar";
 }
 
-function Categories({ categories, mode }: CategoriesListProps) {
-  const renderCategoryItems = () => (
-    <>
-      {categories.map((category: ICategoryItem, index) => (
-        <li key={category.slug}>
-          <NavLink
-            to={`/category/${category.slug}`}
-            className={({ isActive }) => (isActive ? "active" : "")}
-          >
-            {category.name}
-          </NavLink>
-        </li>
-      ))}
-    </>
-  );
+function Categories({ categories, mode = "normal" }: CategoriesListProps) {
+  const renderCategoryItems = () =>
+    categories.map((category: ICategoryItem) => (
+      <li key={category.slug}>
+        <NavLink
+          to={`/category/${category.slug}`}
+          className={({ isActive }) =>
+            isActive
+              ? "text-white font-semibold bg-blue-600 px-3 py-1 rounded"
+              : "text-gray-700 hover:text-blue-600 hover:bg-gray-100 px-3 py-1 rounded"
+          }
+        >
+          {category.name}
+        </NavLink>
+      </li>
+    ));
 
-  if (mode === "sidebar") {
-    return (
-      <div className="categories-list sidebar-categories">
-        <ul className="sidebar-category-list">{renderCategoryItems()}</ul>
-      </div>
-    );
-  }
-  if (mode === "dropdown") {
-    return (
-      <div className="categories-list dropdown-categories">
-        <ul className="dropdown-category-list">{renderCategoryItems()}</ul>
-      </div>
-    );
-  }
+  switch (mode) {
+    case "sidebar":
+      return (
+        <div className="bg-white p-4 rounded-lg shadow-md w-64">
+          <ul className="flex flex-col gap-2">{renderCategoryItems()}</ul>
+        </div>
+      );
 
-  return (
-    <nav className="categories-list navbar-category-list">
-      <div className="container mx-auto">
-        <ul className="nav-links">{renderCategoryItems()}</ul>
-      </div>
-    </nav>
-  );
+    default: // navbar
+      return (
+        <nav className="bg-blue-50 py-2">
+          <div className="mx-auto px-4">
+            <ul className="flex flex-wrap gap-2 justify-center">
+              {renderCategoryItems()}
+            </ul>
+          </div>
+        </nav>
+      );
+  }
 }
 
 export default Categories;

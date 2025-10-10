@@ -1,29 +1,17 @@
 import React from "react";
-import "./Cart.scss";
 import { useCart } from "@/context/CartContext";
-import { Link } from "react-router-dom";
-import { Cart, CartItem } from "@/interfaces/cart";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { CartItem } from "@/interfaces/cart";
 
-const CartPage = () => {
+const CartPage: React.FC = () => {
   const navigate = useNavigate();
   const { cart, removeItem, updateQuantity, clearCart } = useCart();
 
-  const proceedToCheckout = () => {
-    // Navigate to checkout page
-    navigate("/checkout");
-  };
+  const proceedToCheckout = () => navigate("/checkout");
 
   const handleQuantityChange = (productId: number, quantity: number) => {
     if (quantity < 1) return;
-    const item = cart.items.find((i: CartItem) => i.productId === productId);
-    if (item) {
-      updateQuantity(productId, quantity);
-    }
-  };
-
-  const handleRemove = (productId: number) => {
-    removeItem(productId);
+    updateQuantity(productId, quantity);
   };
 
   const total = cart.items.reduce(
@@ -33,73 +21,91 @@ const CartPage = () => {
 
   if (cart.items.length === 0) {
     return (
-      <div className="cart container py-4">
-        <h2>Your cart is empty</h2>
-        <Link to="/">Continue Shopping</Link>
+      <div className="container mx-auto py-10 text-center">
+        <h2 className="text-2xl font-semibold mb-4">Your cart is empty</h2>
+        <Link
+          to="/"
+          className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-5 rounded-lg transition-colors"
+        >
+          Continue Shopping
+        </Link>
       </div>
     );
   }
 
   return (
-    <div className="cart container py-4">
-      <h2>Your Cart</h2>
-      <button className="btn btn-danger mb-3" onClick={clearCart}>
-        Clear Cart
-      </button>
-      <div className="cart-items">
+    <div className="container mx-auto py-10 px-4">
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-3xl font-semibold">Your Cart</h2>
+        <button
+          onClick={clearCart}
+          className="text-sm bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg"
+        >
+          Clear Cart
+        </button>
+      </div>
+
+      <div className="space-y-4">
         {cart.items.map((item: CartItem) => (
           <div
-            className="cart-item d-flex align-items-center mb-3 p-2 border rounded"
             key={item.productId}
+            className="flex items-center justify-between border rounded-lg p-4 bg-white shadow-sm"
           >
-            <img
-              src={item.image}
-              alt={item.name}
-              style={{ width: 80, height: 80, objectFit: "cover" }}
-              className="me-3"
-            />
-            <div className="flex-grow-1">
-              <div className="fw-bold">{item.name}</div>
-              <div>${item.price} x </div>
-              <div className="d-flex align-items-center gap-2">
-                <button
-                  className="btn btn-outline-secondary btn-sm"
-                  onClick={() =>
-                    handleQuantityChange(item.productId, item.quantity - 1)
-                  }
-                  disabled={item.quantity === 1}
-                >
-                  -
-                </button>
-                <span className="mx-2">{item.quantity}</span>
-                <button
-                  className="btn btn-outline-secondary btn-sm"
-                  onClick={() =>
-                    handleQuantityChange(item.productId, item.quantity + 1)
-                  }
-                >
-                  +
-                </button>
-                <span className="ms-2">
-                  = ${(item.price * item.quantity).toFixed(2)}
-                </span>
+            <div className="flex items-center space-x-4">
+              <img
+                src={item.image}
+                alt={item.name}
+                className="w-20 h-20 object-cover rounded"
+              />
+              <div>
+                <h3 className="font-semibold text-gray-800">{item.name}</h3>
+                <p className="text-gray-600">${item.price.toFixed(2)}</p>
+                <div className="flex items-center mt-2 space-x-2">
+                  <button
+                    className="bg-gray-200 px-2 py-1 rounded hover:bg-gray-300"
+                    onClick={() =>
+                      handleQuantityChange(item.productId, item.quantity - 1)
+                    }
+                    disabled={item.quantity === 1}
+                  >
+                    -
+                  </button>
+                  <span className="w-6 text-center">{item.quantity}</span>
+                  <button
+                    className="bg-gray-200 px-2 py-1 rounded hover:bg-gray-300"
+                    onClick={() =>
+                      handleQuantityChange(item.productId, item.quantity + 1)
+                    }
+                  >
+                    +
+                  </button>
+                  <span className="ml-4 text-gray-700 font-medium">
+                    ${(item.price * item.quantity).toFixed(2)}
+                  </span>
+                </div>
               </div>
             </div>
             <button
-              className="btn btn-outline-danger ms-3"
-              onClick={() => handleRemove(item.productId)}
+              onClick={() => removeItem(item.productId)}
+              className="text-red-600 hover:text-red-800 font-medium"
             >
               Remove
             </button>
           </div>
         ))}
       </div>
-      <div className="cart-total mt-4 fs-4 fw-bold">
-        Total: ${total.toFixed(2)}
+
+      <div className="mt-8 text-right">
+        <div className="text-xl font-semibold mb-4">
+          Total: ${total.toFixed(2)}
+        </div>
+        <button
+          onClick={proceedToCheckout}
+          className="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-6 rounded-lg transition-colors"
+        >
+          Proceed to Checkout
+        </button>
       </div>
-      <button className="btn btn-success mt-3" onClick={proceedToCheckout}>
-        Proceed to Checkout
-      </button>
     </div>
   );
 };

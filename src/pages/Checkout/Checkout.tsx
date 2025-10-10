@@ -2,7 +2,6 @@ import React from "react";
 import { useCart } from "@/context/CartContext";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import "./Checkout.scss";
 import { useUser } from "@/context/UserContext";
 import { saveUserOrder } from "@/services/orders/ordersService";
 import { auth } from "@/firebase/firebase";
@@ -13,7 +12,7 @@ interface FormData {
   address: string;
 }
 
-const Checkout = () => {
+const Checkout: React.FC = () => {
   const { cart, clearCart } = useCart();
   const { user } = useUser();
   const navigate = useNavigate();
@@ -30,7 +29,6 @@ const Checkout = () => {
   );
 
   const onSubmit = async (data: FormData) => {
-    // Build order payload
     const orderItems = cart.items.map((item) => ({
       productId: item.productId,
       name: item.name,
@@ -41,18 +39,12 @@ const Checkout = () => {
     const order = {
       items: orderItems,
       totalAmount,
-      shipping: {
-        name: data.name,
-        email: data.email,
-        address: data.address,
-      },
+      shipping: data,
     };
 
     try {
       const uid = auth.currentUser?.uid;
-      if (uid) {
-        await saveUserOrder(uid, order);
-      }
+      if (uid) await saveUserOrder(uid, order);
     } catch (e) {
       console.error("Failed to save order:", e);
     } finally {
@@ -63,29 +55,42 @@ const Checkout = () => {
   };
 
   return (
-    <div className="container py-5">
-      <div className="row">
-        <div className="col-md-7 mb-4">
-          <h1 className="mb-4">Checkout</h1>
-          <h2>Shipping Details</h2>
-          <form onSubmit={handleSubmit(onSubmit)} noValidate>
-            <div className="form-group mb-3">
-              <label htmlFor="name" className="form-label">
+    <div className="container mx-auto px-4 py-10">
+      <div className="grid md:grid-cols-2 gap-8">
+        {/* Left - Shipping Form */}
+        <div>
+          <h1 className="text-3xl font-semibold mb-6">Checkout</h1>
+          <h2 className="text-xl font-medium mb-4 text-gray-700">
+            Shipping Details
+          </h2>
+
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            noValidate
+            className="space-y-5"
+          >
+            <div>
+              <label htmlFor="name" className="block font-medium mb-1">
                 Name
               </label>
               <input
                 type="text"
                 id="name"
                 {...register("name", { required: "Name is required" })}
-                className={`form-control${errors.name ? " is-invalid" : ""}`}
+                className={`w-full border rounded-lg p-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                  errors.name ? "border-red-500" : "border-gray-300"
+                }`}
                 placeholder="Enter your name"
               />
               {errors.name && (
-                <div className="invalid-feedback">{errors.name.message}</div>
+                <p className="text-sm text-red-600 mt-1">
+                  {errors.name.message}
+                </p>
               )}
             </div>
-            <div className="form-group mb-3">
-              <label htmlFor="email" className="form-label">
+
+            <div>
+              <label htmlFor="email" className="block font-medium mb-1">
                 Email
               </label>
               <input
@@ -98,65 +103,78 @@ const Checkout = () => {
                     message: "Invalid email address",
                   },
                 })}
-                className={`form-control${errors.email ? " is-invalid" : ""}`}
+                className={`w-full border rounded-lg p-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                  errors.email ? "border-red-500" : "border-gray-300"
+                }`}
                 placeholder="Enter your email"
               />
               {errors.email && (
-                <div className="invalid-feedback">{errors.email.message}</div>
+                <p className="text-sm text-red-600 mt-1">
+                  {errors.email.message}
+                </p>
               )}
             </div>
-            <div className="form-group mb-3">
-              <label htmlFor="address" className="form-label">
+
+            <div>
+              <label htmlFor="address" className="block font-medium mb-1">
                 Address
               </label>
               <input
                 type="text"
                 id="address"
                 {...register("address", { required: "Address is required" })}
-                className={`form-control${errors.address ? " is-invalid" : ""}`}
+                className={`w-full border rounded-lg p-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                  errors.address ? "border-red-500" : "border-gray-300"
+                }`}
                 placeholder="Enter your address"
               />
               {errors.address && (
-                <div className="invalid-feedback">{errors.address.message}</div>
+                <p className="text-sm text-red-600 mt-1">
+                  {errors.address.message}
+                </p>
               )}
             </div>
-            <div className="place-order text-center">
+
+            <div className="text-center">
               <button
-                className="btn btn-primary"
                 type="submit"
                 disabled={cart.items.length === 0}
+                className="bg-blue-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-blue-700 disabled:opacity-50 transition"
               >
                 Place Order
               </button>
             </div>
           </form>
         </div>
-        <div className="col-md-5">
-          <div className="cart-summary p-4 bg-light rounded shadow-sm">
-            <h2>Your Cart</h2>
-            {cart.items.length === 0 ? (
-              <p>
-                Your cart is empty. <Link to="/products">Shop now</Link>
-              </p>
-            ) : (
-              <ul className="list-group mb-3">
-                {cart.items.map((item) => (
-                  <li
-                    key={item.productId}
-                    className="list-group-item d-flex justify-content-between align-items-center"
-                  >
-                    <div>
-                      <span className="fw-bold">{item.name}</span>{" "}
-                      <span className="text-muted">x{item.quantity}</span>
-                    </div>
-                    <div>${(item.price * item.quantity).toFixed(2)}</div>
-                  </li>
-                ))}
-              </ul>
-            )}
-            <div className="total-amount mt-4">
-              <h3>Total: ${totalAmount.toFixed(2)}</h3>
-            </div>
+
+        {/* Right - Cart Summary */}
+        <div className="bg-gray-50 p-6 rounded-lg shadow">
+          <h2 className="text-xl font-semibold mb-4">Your Cart</h2>
+          {cart.items.length === 0 ? (
+            <p>
+              Your cart is empty.{" "}
+              <Link to="/products" className="text-blue-600 hover:underline">
+                Shop now
+              </Link>
+            </p>
+          ) : (
+            <ul className="divide-y divide-gray-200 mb-4">
+              {cart.items.map((item) => (
+                <li
+                  key={item.productId}
+                  className="flex justify-between py-2 text-gray-700"
+                >
+                  <span>
+                    {item.name}{" "}
+                    <span className="text-gray-500">x{item.quantity}</span>
+                  </span>
+                  <span>${(item.price * item.quantity).toFixed(2)}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+          <div className="text-lg font-semibold text-gray-900">
+            Total: ${totalAmount.toFixed(2)}
           </div>
         </div>
       </div>

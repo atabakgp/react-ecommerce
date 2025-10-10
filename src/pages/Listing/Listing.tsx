@@ -1,4 +1,3 @@
-import "./Listing.scss";
 import {
   useRouteLoaderData,
   useParams,
@@ -9,14 +8,12 @@ import { ICategoryItem } from "@/interfaces/categories";
 import { useFetchProductsByCategory } from "@/hooks/products/useProducts";
 import ProductList from "@/components/product/productList/productList";
 
-interface ListingProps {}
-
 const Listing = () => {
   const categories = useRouteLoaderData("mainLayout") as ICategoryItem[];
-  let categorySlug = useParams().categorySlug as string;
-  const [searchParams, setSearchParams] = useSearchParams();
+  const categorySlug = useParams().categorySlug as string;
+  const [searchParams] = useSearchParams();
   const pageParam = Number(searchParams.get("page") || 1);
-  const limit = 20; // 20 per page as requested
+  const limit = 20; // 20 per page
   const skip = (pageParam - 1) * limit;
 
   const {
@@ -28,21 +25,27 @@ const Listing = () => {
   const total = productsByCategory?.total || 0;
 
   return (
-    <div className="products-listing">
-      <div className="container">
-        <div className="row">
-          <div className="col-lg-2">
-            <Categories categories={categories} mode="sidebar" />
-          </div>
-          <div className="col-lg-10">
-            {isPending && <div>Loading...</div>}
-            <ProductList
-              products={productsByCategory?.products}
-              total={total}
-              pageSize={limit}
-            />
-          </div>
-        </div>
+    <div className="products-listing bg-gray-50 min-h-screen py-8">
+      <div className="max-w-7xl mx-auto px-4 flex gap-6">
+        {/* Sidebar */}
+        <aside className="w-64 flex-shrink-0">
+          <Categories categories={categories} mode="sidebar" />
+        </aside>
+
+        {/* Main Content */}
+        <main className="flex-1">
+          {isPending && <div className="text-gray-500">Loading...</div>}
+
+          {error && (
+            <div className="text-red-500">Failed to load products.</div>
+          )}
+
+          <ProductList
+            products={productsByCategory?.products}
+            total={total}
+            pageSize={limit}
+          />
+        </main>
       </div>
     </div>
   );

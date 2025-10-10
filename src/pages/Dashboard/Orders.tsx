@@ -29,43 +29,56 @@ const Orders: React.FC = () => {
     load();
   }, [user?.email]);
 
-  if (loading) return <div className="container py-4">Loading orders...</div>;
-  if (error) return <div className="container py-4 text-danger">{error}</div>;
+  if (loading)
+    return <div className="container py-10 text-center">Loading orders...</div>;
+
+  if (error)
+    return (
+      <div className="container py-10 text-center text-red-500">{error}</div>
+    );
 
   return (
-    <div className="container py-4">
-      <h2 className="mb-4">My Orders</h2>
+    <div className="container mx-auto py-10">
+      <h2 className="text-2xl font-semibold mb-6 border-b pb-3">My Orders</h2>
+
       {orders.length === 0 ? (
-        <p>No orders yet.</p>
+        <p className="text-gray-600">You haven’t placed any orders yet.</p>
       ) : (
-        <div className="table-responsive">
-          <table className="table table-striped">
+        <div className="overflow-x-auto bg-white rounded-xl shadow-md">
+          <table className="min-w-full border-collapse">
             <thead>
-              <tr>
-                <th>Order ID</th>
-                <th>Date</th>
-                <th>Items</th>
-                <th>Total</th>
+              <tr className="bg-gray-100 text-gray-700 text-left text-sm uppercase tracking-wider">
+                <th className="py-3 px-5 border-b">Order ID</th>
+                <th className="py-3 px-5 border-b">Date</th>
+                <th className="py-3 px-5 border-b">Items</th>
+                <th className="py-3 px-5 border-b text-right">Total</th>
               </tr>
             </thead>
             <tbody>
               {orders.map((o) => (
-                <tr key={o.id}>
-                  <td>{o.id}</td>
-                  <td>
+                <tr
+                  key={o.id}
+                  className="hover:bg-gray-50 transition-colors duration-150"
+                >
+                  <td className="py-3 px-5 border-b text-gray-800">{o.id}</td>
+                  <td className="py-3 px-5 border-b text-gray-600">
                     {o.createdAt?.toDate
                       ? o.createdAt.toDate().toLocaleString()
                       : "-"}
                   </td>
-                  <td>
+                  <td className="py-3 px-5 border-b text-gray-700">
                     {o.items.map((it) => (
-                      <div key={`${o.id}-${it.productId}`}>
-                        {it.name} x{it.quantity} ($
-                        {(it.price * it.quantity).toFixed(2)})
+                      <div key={`${o.id}-${it.productId}`} className="text-sm">
+                        {it.name} ×{it.quantity} —{" "}
+                        <span className="text-gray-500">
+                          ${Number(it.price * it.quantity).toFixed(2)}
+                        </span>
                       </div>
                     ))}
                   </td>
-                  <td>${o.totalAmount.toFixed(2)}</td>
+                  <td className="py-3 px-5 border-b text-right font-medium text-gray-900">
+                    ${o.totalAmount.toFixed(2)}
+                  </td>
                 </tr>
               ))}
             </tbody>
