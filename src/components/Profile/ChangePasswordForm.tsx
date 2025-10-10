@@ -44,7 +44,6 @@ function ChangePasswordForm() {
 
   return (
     <div className="max-w-md bg-white p-6 rounded-lg shadow-md">
-      <h4 className="text-xl font-semibold mb-4">Change Password</h4>
       <form
         onSubmit={handleSubmit(handleChangePassword)}
         className="flex flex-col gap-4"

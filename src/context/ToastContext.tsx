@@ -13,29 +13,33 @@ export function ToastProvider({ children }: { children: ReactNode }) {
 
   function showToast(message: string, type: ToastType = "success") {
     setToast({ message, type });
-
-    setTimeout(() => {
-      setToast(null);
-    }, 3000);
+    setTimeout(() => setToast(null), 3000);
   }
+
+  // Map toast types to Tailwind classes
+  const typeClasses: Record<ToastType, string> = {
+    success: "bg-green-500",
+    danger: "bg-red-500",
+    info: "bg-blue-500",
+    warning: "bg-yellow-500",
+  };
 
   return (
     <ToastContext.Provider value={{ showToast }}>
       {children}
+
       {toast && (
-        <div
-          className={`toast-container position-fixed top-0 end-0 p-3`}
-          style={{ zIndex: 9999 }}
-        >
-          <div className={`toast align-items-center text-white bg-${toast.type} show`} role="alert">
-            <div className="d-flex">
-              <div className="toast-body">{toast.message}</div>
-              <button
-                type="button"
-                className="btn-close btn-close-white me-2 m-auto"
-                onClick={() => setToast(null)}
-              />
-            </div>
+        <div className="fixed top-5 right-5 z-50">
+          <div
+            className={`flex items-center justify-between max-w-sm w-full px-4 py-3 rounded shadow-md text-white ${typeClasses[toast.type]}`}
+          >
+            <div>{toast.message}</div>
+            <button
+              onClick={() => setToast(null)}
+              className="ml-4 text-white font-bold hover:text-gray-200"
+            >
+              ×
+            </button>
           </div>
         </div>
       )}

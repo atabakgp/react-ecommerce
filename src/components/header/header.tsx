@@ -27,11 +27,11 @@ function Header() {
   };
 
   return (
-    <header className="header">
-      <div className="container m-auto">
+    <header className="flex header py-4 shadow-md mb-4 bg-white">
+      <div className="container mx-auto">
         <div className="logo">
           <Link to="/">
-            <FaReact size="4em" />
+            <FaReact size="3em" />
           </Link>
         </div>
 

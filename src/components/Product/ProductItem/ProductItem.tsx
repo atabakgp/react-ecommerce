@@ -30,6 +30,7 @@ const ProductItem = ({ product }: IProductItemProps) => {
   ): void => {
     event.preventDefault();
     event.stopPropagation();
+    console.log(auth);
     if (!auth.currentUser) navigate("/login");
     toggleFavorite(productId);
   };
