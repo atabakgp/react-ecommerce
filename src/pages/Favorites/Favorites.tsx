@@ -1,6 +1,6 @@
 import { useQueries } from "@tanstack/react-query";
 import { useFavoritesContext } from "@/context/FavoriteContext";
-import { getProductById } from "@/services/productService";
+import { getProductById } from "@/services/products/productService";
 import { IProduct } from "@/interfaces/products";
 import ProductList from "@/components/Product/ProductList/ProductList";
 import { useSearchParams } from "react-router-dom";
@@ -44,7 +44,12 @@ const Favorites = () => {
       )}
 
       {products.length > 0 && (
-        <ProductList title="My Favorites" products={pageItems} total={products.length} pageSize={pageSize} />
+        <ProductList
+          title="My Favorites"
+          products={pageItems}
+          total={products.length}
+          pageSize={pageSize}
+        />
       )}
     </div>
   );

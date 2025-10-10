@@ -1,6 +1,5 @@
-import productAPI from "./axios";
-import { IProductsResponse, IProduct } from "@/interfaces/products";
-import { ICategoryItem } from "@/interfaces/categories";
+import productAPI from "../api/axios";
+import { IProductsResponse, IProduct, ICategoryItem } from "./products.types";
 
 export const getProducts = async (
   limit: number = 30,

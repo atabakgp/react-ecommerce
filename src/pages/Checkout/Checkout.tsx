@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import "./Checkout.scss";
 import { useUser } from "@/context/UserContext";
-import { saveUserOrder } from "@/services/ordersService";
+import { saveUserOrder } from "@/services/orders/ordersService";
 import { auth } from "@/firebase/firebase";
 
 interface FormData {

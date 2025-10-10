@@ -7,7 +7,10 @@ import {
 } from "react";
 import { Cart, CartItem } from "../interfaces/cart";
 import { auth } from "../firebase/firebase";
-import { saveCartToFirestore as saveCartDoc, getCartFromFirestore } from "@/services/cartService";
+import {
+  saveCartToFirestore as saveCartDoc,
+  getCartFromFirestore,
+} from "@/services/cart/cartService";
 import { onAuthStateChanged } from "firebase/auth";
 
 type ProviderProps = {

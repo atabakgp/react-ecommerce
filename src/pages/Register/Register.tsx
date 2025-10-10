@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import { registerUser } from "../../services/authServices";
+import { registerUser } from "../../services/auth/authServices";
 import { useState } from "react";
 import { useUser } from "../../context/UserContext";
 
@@ -34,7 +34,7 @@ function Register() {
       const firebaseUser = userCredential.user;
       const accessToken = await firebaseUser.getIdToken();
       const email = firebaseUser.email;
-      const displayName = firebaseUser.displayName
+      const displayName = firebaseUser.displayName;
 
       setUser({
         email,

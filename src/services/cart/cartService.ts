@@ -1,6 +1,6 @@
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import { db } from "@/firebase/firebase";
-import { CartItem } from "@/interfaces/cart";
+import { CartItem } from "./cart.types";
 
 export const saveCartToFirestore = async (
   userId: string,

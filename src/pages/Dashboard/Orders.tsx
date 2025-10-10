@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getUserOrders, Order } from "@/services/ordersService";
+import { getUserOrders, Order } from "@/services/orders/ordersService";
 import { auth } from "@/firebase/firebase";
 import { useUser } from "@/context/UserContext";
 
@@ -52,11 +52,16 @@ const Orders: React.FC = () => {
               {orders.map((o) => (
                 <tr key={o.id}>
                   <td>{o.id}</td>
-                  <td>{o.createdAt?.toDate ? o.createdAt.toDate().toLocaleString() : "-"}</td>
+                  <td>
+                    {o.createdAt?.toDate
+                      ? o.createdAt.toDate().toLocaleString()
+                      : "-"}
+                  </td>
                   <td>
                     {o.items.map((it) => (
                       <div key={`${o.id}-${it.productId}`}>
-                        {it.name} x{it.quantity} (${(it.price * it.quantity).toFixed(2)})
+                        {it.name} x{it.quantity} ($
+                        {(it.price * it.quantity).toFixed(2)})
                       </div>
                     ))}
                   </td>
@@ -72,5 +77,3 @@ const Orders: React.FC = () => {
 };
 
 export default Orders;
-
-

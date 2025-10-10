@@ -24,7 +24,7 @@ import Success from "@/pages/Checkout/Success";
 import PrivateRoute from "./privateRoutes";
 import PublicRoute from "./publicRoutes";
 
-import { getCategories } from "@/services/productService";
+import { getCategories } from "@/services/products/productService";
 
 export async function fetchCategoriesLoader() {
   const categories = await getCategories();

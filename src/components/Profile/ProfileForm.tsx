@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useUser } from "../../context/UserContext";
-import { updateUserProfile } from "../../services/profileServices";
+import { updateUserProfile } from "../../services/profile/profileService";
 
 import { useToast } from "../../context/ToastContext";
 

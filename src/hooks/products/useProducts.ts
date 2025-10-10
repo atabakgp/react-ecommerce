@@ -5,7 +5,7 @@ import {
   getProductsByCategory,
   getProductById,
   searchProducts,
-} from "@/services/productService";
+} from "@/services/products/productService";
 
 export const useProducts = (limit?: number, skip?: number) => {
   return useQuery({

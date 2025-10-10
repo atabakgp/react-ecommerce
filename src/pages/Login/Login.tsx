@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { loginUser } from "../../services/authServices";
+import { loginUser } from "../../services/auth/authServices";
 import { useUser } from "../../context/UserContext";
 import { useLoading } from "../../context/LoadingContext";
 
@@ -25,7 +25,11 @@ function Login() {
 
   const onSubmit: SubmitHandler<Login> = async (data) => {
     try {
-      const userCredential = await loginUser(data.email, data.password, setLoading);
+      const userCredential = await loginUser(
+        data.email,
+        data.password,
+        setLoading
+      );
 
       const firebaseUser = userCredential.user;
       const accessToken = await firebaseUser.getIdToken();
@@ -38,7 +42,6 @@ function Login() {
         accessToken,
       });
       navigate("/dashboard");
-      
     } catch (error: any) {
       console.error("Firebase login error:", error);
       setError(error.message);

@@ -1,7 +1,7 @@
 import "./Header.scss";
 import { Link } from "react-router-dom";
 import { useUser } from "@/context/UserContext";
-import { logoutUser } from "@/services/authServices";
+import { logoutUser } from "@/services/auth/authServices";
 import { useCart } from "@/context/CartContext";
 import { useState, useRef, useEffect } from "react";
 import { useSearchProducts } from "@/hooks/products/useProducts";

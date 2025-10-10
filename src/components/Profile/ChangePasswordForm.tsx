@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { changePassword } from "../../services/profileServices";
+import { changePassword } from "../../services/profile/profileService";
 import { useToast } from "../../context/ToastContext";
 
 type ChangePasswordForm = {

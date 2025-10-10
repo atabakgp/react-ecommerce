@@ -1,25 +1,6 @@
 import { addDoc, collection, getDocs, orderBy, query, serverTimestamp } from "firebase/firestore";
 import { db } from "@/firebase/firebase";
-
-export interface OrderItem {
-  productId: number | string;
-  name: string;
-  price: number;
-  quantity: number;
-}
-
-export interface Order {
-  id?: string;
-  userId: string;
-  items: OrderItem[];
-  totalAmount: number;
-  shipping: {
-    name: string;
-    email: string;
-    address: string;
-  };
-  createdAt?: any;
-}
+import { Order } from "./orders.types";
 
 export async function saveUserOrder(userId: string, order: Omit<Order, "userId" | "createdAt">): Promise<void> {
   const ordersRef = collection(db, "users", userId, "orders");
