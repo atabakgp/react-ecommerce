@@ -2,7 +2,7 @@ import { useQueries } from "@tanstack/react-query";
 import { useFavoritesContext } from "@/context/FavoriteContext";
 import { getProductById } from "@/services/products/productService";
 import { IProduct } from "@/interfaces/products";
-import ProductList from "@/components/Product/ProductList/ProductList";
+import ProductList from "@/components/product/productList/productList";
 import { useSearchParams } from "react-router-dom";
 
 const Favorites = () => {

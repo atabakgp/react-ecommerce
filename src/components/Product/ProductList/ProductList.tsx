@@ -1,8 +1,8 @@
 import React from "react";
 import { IProduct } from "../../../interfaces/products";
-import ProductItem from "../ProductItem/ProductItem";
+import ProductItem from "../productItem/productItem";
 import "./ProductList.scss";
-import Pagination from "@/components/Pagination/Pagination";
+import Pagination from "@/components/pagination/pagination";
 
 interface ProductListProps {
   title?: string;
@@ -11,8 +11,14 @@ interface ProductListProps {
   pageSize?: number; // items per page
 }
 
-const ProductList = ({ title, products, total, pageSize }: ProductListProps) => {
-  const totalPages = total && pageSize ? Math.max(1, Math.ceil(total / pageSize)) : undefined;
+const ProductList = ({
+  title,
+  products,
+  total,
+  pageSize,
+}: ProductListProps) => {
+  const totalPages =
+    total && pageSize ? Math.max(1, Math.ceil(total / pageSize)) : undefined;
   return (
     <section className="product-list">
       {title && <h2 className="product-list__title">{title}</h2>}
@@ -22,9 +28,7 @@ const ProductList = ({ title, products, total, pageSize }: ProductListProps) => 
             <ProductItem key={product.id} product={product} />
           ))}
       </div>
-      {totalPages && (
-        <Pagination totalPages={totalPages} />
-      )}
+      {totalPages && <Pagination totalPages={totalPages} />}
     </section>
   );
 };

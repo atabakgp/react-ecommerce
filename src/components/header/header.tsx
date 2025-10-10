@@ -5,7 +5,7 @@ import { authService } from "@/services/auth/authService";
 import { useCart } from "@/context/CartContext";
 import { useState, useRef, useEffect } from "react";
 import { useSearchProducts } from "@/hooks/products/useProducts";
-import SearchDropdown from "@/components/SearchDropDown/SearchDropDown";
+import SearchDropdown from "@/components/searchDropdown/SearchDropdown";
 
 function Header() {
   const [query, setQuery] = useState("");

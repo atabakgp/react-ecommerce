@@ -1,7 +1,7 @@
 import "./Profile.scss";
-import ProfileForm from "../../components/Profile/ProfileForm";
-import EmailForm from "../../components/Profile/EmailForm";
-import ChangePasswordForm from "../../components/Profile/ChangePasswordForm";
+import ProfileForm from "../../components/profile/profileForm";
+import EmailForm from "../../components/profile/emailForm";
+import ChangePasswordForm from "../../components/profile/changePasswordForm";
 
 function Profile() {
   return (

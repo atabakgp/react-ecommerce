@@ -1,7 +1,7 @@
 import "./Detail.scss";
 import { useParams } from "react-router-dom";
 import { useFetchProductById } from "@/hooks/products/useProducts";
-import StarRating from "@/components/Product/ProductItem/StarRating";
+import StarRating from "@/components/product/productItem/StarRating";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 import "swiper/css";

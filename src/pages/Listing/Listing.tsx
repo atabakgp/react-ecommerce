@@ -1,9 +1,13 @@
 import "./Listing.scss";
-import { useRouteLoaderData, useParams, useSearchParams } from "react-router-dom";
-import Categories from "@/components/Categories/Categories";
+import {
+  useRouteLoaderData,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
+import Categories from "@/components/categories/categories";
 import { ICategoryItem } from "@/interfaces/categories";
 import { useFetchProductsByCategory } from "@/hooks/products/useProducts";
-import ProductList from "@/components/Product/ProductList/ProductList";
+import ProductList from "@/components/product/productList/productList";
 
 interface ListingProps {}
 
@@ -33,7 +37,11 @@ const Listing = () => {
           </div>
           <div className="col-lg-10">
             {isPending && <div>Loading...</div>}
-            <ProductList products={productsByCategory?.products} total={total} pageSize={limit} />
+            <ProductList
+              products={productsByCategory?.products}
+              total={total}
+              pageSize={limit}
+            />
           </div>
         </div>
       </div>

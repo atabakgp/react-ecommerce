@@ -1,7 +1,7 @@
 import { useProducts } from "../hooks/products/useProducts";
-import ProductList from "../components/Product/ProductList/ProductList";
+import ProductList from "../components/product/productList/productList";
 import "./Home.scss";
-import Categories from "@/components/Categories/Categories";
+import Categories from "@/components/categories/categories";
 import { ICategoryItem } from "@/interfaces/categories";
 import { useRouteLoaderData, useSearchParams } from "react-router-dom";
 
@@ -27,7 +27,11 @@ const Home = () => {
       </div>
       <div className="container">
         <div className="home-page-products">
-          <ProductList title="New Arrivals" products={newArrivals} total={total} pageSize={pageSize} />
+          <ProductList
+            products={newArrivals}
+            total={total}
+            pageSize={pageSize}
+          />
         </div>
       </div>
     </div>
