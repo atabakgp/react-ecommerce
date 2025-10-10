@@ -33,7 +33,6 @@ const Listing = () => {
         <div className="row">
           <div className="col-lg-2">
             <Categories categories={categories} mode="sidebar" />
-            <div>Filters</div>
           </div>
           <div className="col-lg-10">
             {isPending && <div>Loading...</div>}
