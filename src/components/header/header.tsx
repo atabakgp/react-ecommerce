@@ -7,6 +7,7 @@ import { authService } from "@/services/auth/authService";
 import SearchBar from "./searchBar";
 import CartLinks from "./cartLinks";
 import UserMenu from "./userMenu";
+import { FaReact } from "react-icons/fa6";
 
 function Header() {
   const { user, setUser } = useUser();
@@ -29,7 +30,9 @@ function Header() {
     <header className="header">
       <div className="container m-auto">
         <div className="logo">
-          <Link to="/">Website Logo</Link>
+          <Link to="/">
+            <FaReact size="4em" />
+          </Link>
         </div>
 
         <SearchBar />
