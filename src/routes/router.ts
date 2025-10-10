@@ -9,17 +9,17 @@ import MainLayout from "@/layouts/MainLayout";
 import DashboardLayout from "@/layouts/DashboardLayout";
 
 import Home from "@/pages/Home";
-import Login from "@/pages/Login/Login";
-import Register from "@/pages/Register/Register";
-import Dashboard from "@/pages/Dashboard/Dashboard";
-import Orders from "@/pages/Dashboard/Orders";
-import Profile from "@/pages/Profile/Profile";
-import Listing from "@/pages/Listing/Listing";
-import Detail from "@/pages/Detail/Detail";
-import Cart from "@/pages/Cart/Cart";
-import Favorites from "@/pages/Favorites/Favorites";
-import Checkout from "@/pages/Checkout/Checkout";
-import Success from "@/pages/Checkout/Success";
+import Login from "@/pages/login/Login";
+import Register from "@/pages/register/Register";
+import Dashboard from "@/pages/dashboard/dashboard";
+import Orders from "@/pages/dashboard/orders";
+import Profile from "@/pages/profile/Profile";
+import Listing from "@/pages/listing/listing";
+import Detail from "@/pages/detail/detail";
+import Cart from "@/pages/cart/cart";
+import Favorites from "@/pages/favorites/favorites";
+import Checkout from "@/pages/checkout/checkout";
+import Success from "@/pages/checkout/success";
 
 import PrivateRoute from "./privateRoutes";
 import PublicRoute from "./publicRoutes";
