@@ -4,6 +4,7 @@ import {
   useState,
   useEffect,
   ReactNode,
+  useMemo,
 } from "react";
 import { Cart, CartItem } from "@/interfaces/cart";
 import { auth } from "../firebase/firebase";
@@ -150,13 +151,19 @@ export const CartProvider = ({ children }: ProviderProps) => {
     else saveGuestCart([]);
   };
 
-  return (
-    <CartContext.Provider
-      value={{ cart, loading, addItem, removeItem, updateQuantity, clearCart }}
-    >
-      {children}
-    </CartContext.Provider>
+  const value = useMemo(
+    () => ({
+      cart,
+      loading,
+      addItem,
+      removeItem,
+      updateQuantity,
+      clearCart,
+    }),
+    [cart, loading]
   );
+
+  return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 };
 
 export const useCart = () => {
