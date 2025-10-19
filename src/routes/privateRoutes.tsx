@@ -2,7 +2,7 @@ import { Navigate, Outlet } from "react-router-dom";
 import { useUser } from "../context/UserContext";
 import { useLoading } from "../context/LoadingContext";
 
-import Spinner from "../components/spinner/spinner";
+import Spinner from "@/components/spinner/spinner";
 
 const PrivateRoute = () => {
   const { user } = useUser();
