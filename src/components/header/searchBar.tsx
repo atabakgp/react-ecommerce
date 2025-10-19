@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useSearchProducts } from "@/hooks/products/useProducts";
-import SearchDropdown from "@/components/searchDropdown/SearchDropdown";
+import SearchDropdown from "@/components/searchDropdown/searchDropdown";
 
 const SearchBar = () => {
   const [query, setQuery] = useState("");
