@@ -1,7 +1,7 @@
 import { Outlet } from "react-router";
 import Header from "@/components/header/header";
 import useAuthObserver from "./hooks/auth/useAuthObserver";
-// import Spinner from "@/components/spinner/spinner";
+import Spinner from "@/components/spinner/spinner";
 import { useLoading } from "./context/LoadingContext";
 
 function App() {
@@ -10,7 +10,7 @@ function App() {
 
   return (
     <div className="App">
-      {/* {loading && <Spinner />} */}
+      {loading && <Spinner />}
       <Header />
       <Outlet />
     </div>
