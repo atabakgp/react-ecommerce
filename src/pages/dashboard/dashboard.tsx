@@ -1,5 +1,3 @@
-import "./dashboard.scss";
-
 function Dashboard() {
   return (
     <div className="dashboard">
