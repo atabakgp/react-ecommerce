@@ -17,14 +17,18 @@ const app = initializeApp(firebaseConfig);
 
 // Auth
 const auth = getAuth(app);
-if (import.meta.env.MODE === "development") {
-  connectAuthEmulator(auth, "http://localhost:9099");
-}
-
 // Firestore
 const db = getFirestore(app);
-if (import.meta.env.MODE === "development") {
-  connectFirestoreEmulator(db, "localhost", 8080); // default port
+
+// Only connect to emulators during development (npm run dev)
+if (import.meta.env.DEV) {
+  try {
+    connectAuthEmulator(auth, "http://localhost:9099");
+    connectFirestoreEmulator(db, "localhost", 8080);
+    console.log("✅ Connected to Firebase Emulators");
+  } catch (error) {
+    console.warn("⚠️ Failed to connect to emulators:", error);
+  }
 }
 
 export { auth, db };
