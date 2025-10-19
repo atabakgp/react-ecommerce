@@ -7,9 +7,9 @@ import {
   useMemo,
 } from "react";
 import { Cart, CartItem } from "@/interfaces/cart";
-import { auth } from "../firebase/firebase";
+import { auth } from "@/firebase/firebase";
 import {
-  saveCartToFirestore as saveCartDoc,
+  saveCartToFirestore,
   getCartFromFirestore,
 } from "@/services/cart/cartService";
 import { onAuthStateChanged } from "firebase/auth";
@@ -32,19 +32,6 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 export const CartProvider = ({ children }: ProviderProps) => {
   const [cart, setCart] = useState<Cart>({ items: [] });
   const [loading, setLoading] = useState(true);
-
-  // Helper: save cart to Firestore
-  const saveCartToFirestore = async (updatedItems: CartItem[]) => {
-    if (!auth.currentUser || !auth.currentUser.uid || !auth.currentUser.email)
-      return;
-    const userId = auth.currentUser.uid;
-    const email = auth.currentUser.email;
-    try {
-      await saveCartDoc(userId, email, updatedItems);
-    } catch (error) {
-      console.error("Failed to update cart in Firestore:", error);
-    }
-  };
 
   // Helper: save guest cart to localStorage
   const saveGuestCart = (updatedItems: CartItem[]) => {
@@ -90,12 +77,12 @@ export const CartProvider = ({ children }: ProviderProps) => {
           const mergedCart = mergeCarts(guestCart, firestoreCart);
 
           setCart({ items: mergedCart });
-          await saveCartToFirestore(mergedCart);
+          await saveCartToFirestore(user.uid, user.email, mergedCart);
           localStorage.removeItem("guestCart"); // Clear guest cart after merging
         } else {
           // First time login: save guest cart to Firestore
           setCart({ items: guestCart });
-          await saveCartToFirestore(guestCart);
+          await saveCartToFirestore(user.uid, user.email, guestCart);
           localStorage.removeItem("guestCart");
         }
       } catch (error) {
@@ -122,16 +109,21 @@ export const CartProvider = ({ children }: ProviderProps) => {
 
     setCart({ items: updatedItems });
 
-    if (auth.currentUser?.uid) saveCartToFirestore(updatedItems);
-    else saveGuestCart(updatedItems);
+    if (auth.currentUser?.uid && auth.currentUser?.email) {
+      saveCartToFirestore(auth.currentUser.uid, auth.currentUser.email, updatedItems);
+    } else {
+      saveGuestCart(updatedItems);
+    }
   };
 
   const removeItem = (productId: number) => {
     const updatedItems = cart.items.filter((i) => i.productId !== productId);
     setCart({ items: updatedItems });
-
-    if (auth.currentUser?.uid) saveCartToFirestore(updatedItems);
-    else saveGuestCart(updatedItems);
+   if (auth.currentUser?.uid && auth.currentUser?.email) {
+      saveCartToFirestore(auth.currentUser.uid, auth.currentUser.email, updatedItems);
+    } else {
+      saveGuestCart(updatedItems);
+    }
   };
 
   const updateQuantity = (productId: number, quantity: number) => {
@@ -140,15 +132,21 @@ export const CartProvider = ({ children }: ProviderProps) => {
     );
     setCart({ items: updatedItems });
 
-    if (auth.currentUser?.uid) saveCartToFirestore(updatedItems);
-    else saveGuestCart(updatedItems);
+      if (auth.currentUser?.uid && auth.currentUser?.email) {
+        saveCartToFirestore(auth.currentUser.uid, auth.currentUser.email, updatedItems);
+      } else {
+        saveGuestCart(updatedItems);
+      }
   };
 
   const clearCart = () => {
     setCart({ items: [] });
 
-    if (auth.currentUser?.uid) saveCartToFirestore([]);
-    else saveGuestCart([]);
+    if (auth.currentUser?.uid && auth.currentUser?.email) {
+      saveCartToFirestore(auth.currentUser.uid, auth.currentUser.email, []);
+    } else {
+      saveGuestCart([]);
+    }
   };
 
   const value = useMemo(
