@@ -1,5 +1,5 @@
 import { useProducts } from "../hooks/products/useProducts";
-import ProductList from "../components/product/productList/productList";
+import ProductList from "@/components/product/productList/productList";
 import "./home.scss";
 import Categories from "@/components/categories/categories";
 import { ICategoryItem } from "@/interfaces/categories";
