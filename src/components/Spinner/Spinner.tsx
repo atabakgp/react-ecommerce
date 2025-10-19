@@ -1,5 +1,5 @@
 // src/components/SpinnerOverlay/SpinnerOverlay.tsx
-import './Spinner.scss';
+import './spinner.scss';
 
 const SpinnerOverlay = () => {
   return (
