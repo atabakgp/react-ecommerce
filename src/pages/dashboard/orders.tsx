@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { getUserOrders, Order } from "@/services/orders/ordersService";
+import { getUserOrders } from "@/services/orders/ordersService";
 import { auth } from "@/firebase/firebase";
 import { useUser } from "@/context/UserContext";
+import { Order } from "@/interfaces/orders";
 
 const Orders: React.FC = () => {
   const { user } = useUser();

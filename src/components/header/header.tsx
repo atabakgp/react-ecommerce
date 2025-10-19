@@ -1,5 +1,5 @@
 // Header.tsx
-import "./Header.scss";
+import "./header.scss";
 import { Link } from "react-router-dom";
 import { useUser } from "@/context/UserContext";
 import { useCart } from "@/context/CartContext";

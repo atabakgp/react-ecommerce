@@ -1,4 +1,4 @@
-import "./Dashboard.scss";
+import "./dashboard.scss";
 
 function Dashboard() {
   return (

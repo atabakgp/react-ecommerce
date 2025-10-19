@@ -1,4 +1,3 @@
-import React from "react";
 import { IProduct } from "../../../interfaces/products";
 import ProductItem from "../productItem/productItem";
 import Pagination from "@/components/pagination/pagination";

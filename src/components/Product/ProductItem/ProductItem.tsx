@@ -1,5 +1,5 @@
 import { IProduct } from "@/interfaces/products";
-import "./ProductItem.scss";
+import "./productItem.scss";
 import StarRating from "./StarRating";
 import { Link, useNavigate } from "react-router-dom";
 import { FaHeart, FaRegHeart } from "react-icons/fa6";
