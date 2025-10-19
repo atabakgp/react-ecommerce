@@ -16,7 +16,7 @@ import Orders from "@/pages/dashboard/orders";
 import Profile from "@/pages/profile/profile";
 import Listing from "@/pages/listing/listing";
 import Detail from "@/pages/detail/detail";
-import Cart from "@/pages/sart/cart";
+import Cart from "@/pages/cart/cart";
 import Favorites from "@/pages/favorites/favorites";
 import Checkout from "@/pages/checkout/checkout";
 import Success from "@/pages/checkout/success";
