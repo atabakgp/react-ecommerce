@@ -13,6 +13,7 @@ import {
   getCartFromFirestore,
 } from "@/services/cart/cartService";
 import { onAuthStateChanged } from "firebase/auth";
+import { useToast } from "@/context/ToastContext";
 
 type ProviderProps = {
   children: ReactNode;
@@ -32,6 +33,7 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 export const CartProvider = ({ children }: ProviderProps) => {
   const [cart, setCart] = useState<Cart>({ items: [] });
   const [loading, setLoading] = useState(true);
+  const { showToast } = useToast();
 
   // Helper: save guest cart to localStorage
   const saveGuestCart = (updatedItems: CartItem[]) => {
@@ -54,6 +56,27 @@ export const CartProvider = ({ children }: ProviderProps) => {
     });
 
     return merged;
+  };
+
+  const persistCart = async (
+    updatedItems: CartItem[],
+    successMessage: string
+  ) => {
+    try {
+      if (auth.currentUser?.uid && auth.currentUser?.email) {
+        await saveCartToFirestore(
+          auth.currentUser.uid,
+          auth.currentUser.email,
+          updatedItems
+        );
+      } else {
+        saveGuestCart(updatedItems);
+      }
+      showToast(successMessage, "success");
+    } catch (error: any) {
+      console.error("Cart operation failed:", error);
+      showToast(error.message || "Failed to update cart", "danger");
+    }
   };
 
   // Load cart on auth state change
@@ -108,22 +131,13 @@ export const CartProvider = ({ children }: ProviderProps) => {
     }
 
     setCart({ items: updatedItems });
-
-    if (auth.currentUser?.uid && auth.currentUser?.email) {
-      saveCartToFirestore(auth.currentUser.uid, auth.currentUser.email, updatedItems);
-    } else {
-      saveGuestCart(updatedItems);
-    }
+    persistCart(updatedItems, "Item added to cart");
   };
 
   const removeItem = (productId: number) => {
     const updatedItems = cart.items.filter((i) => i.productId !== productId);
     setCart({ items: updatedItems });
-   if (auth.currentUser?.uid && auth.currentUser?.email) {
-      saveCartToFirestore(auth.currentUser.uid, auth.currentUser.email, updatedItems);
-    } else {
-      saveGuestCart(updatedItems);
-    }
+    persistCart(updatedItems, "Item removed from cart");
   };
 
   const updateQuantity = (productId: number, quantity: number) => {
@@ -131,22 +145,13 @@ export const CartProvider = ({ children }: ProviderProps) => {
       i.productId === productId ? { ...i, quantity } : i
     );
     setCart({ items: updatedItems });
-
-      if (auth.currentUser?.uid && auth.currentUser?.email) {
-        saveCartToFirestore(auth.currentUser.uid, auth.currentUser.email, updatedItems);
-      } else {
-        saveGuestCart(updatedItems);
-      }
+    persistCart(updatedItems, "Cart updated successfully");
   };
 
   const clearCart = () => {
-    setCart({ items: [] });
-
-    if (auth.currentUser?.uid && auth.currentUser?.email) {
-      saveCartToFirestore(auth.currentUser.uid, auth.currentUser.email, []);
-    } else {
-      saveGuestCart([]);
-    }
+    const updatedItems: CartItem[] = [];
+    setCart({ items: updatedItems });
+    persistCart(updatedItems, "Cart cleared successfully");
   };
 
   const value = useMemo(
