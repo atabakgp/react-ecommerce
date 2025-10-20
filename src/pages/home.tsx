@@ -1,6 +1,6 @@
 import { useProducts } from "../hooks/products/useProducts";
 import ProductList from "@/components/product/productList/productList";
-import "@/pages/home/home.css";
+import "./home.scss";
 import Categories from "@/components/categories/categories";
 import { ICategoryItem } from "@/interfaces/categories";
 import { useRouteLoaderData, useSearchParams } from "react-router-dom";
