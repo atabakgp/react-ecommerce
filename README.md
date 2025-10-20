@@ -52,6 +52,26 @@ VITE_FIREBASE_MEASUREMENT_ID=your_measurement_id
 npm run dev
 ```
 
+### 🔥 Firebase Emulator (Optional for Local Testing)
+
+```bash
+# Install Firebase CLI globally
+npm install -g firebase-tools
+
+# Start Firebase emulators (Authentication & Firestore)
+firebase emulators:start
+
+# In another terminal, run the app
+npm run dev
+```
+
+**Benefits of using emulators:**
+
+- Test without affecting production data
+- Faster development cycle
+- No Firebase quota usage during development
+- Automatic connection when running in dev mode
+
 ---
 
 ## 📁 Project Structure
