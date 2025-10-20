@@ -1,15 +1,19 @@
 import { auth } from "../../firebase/firebase";
-import { AUTH_ERROR_CODES } from "./auth.types";
+import { AUTH_ERROR_CODES, AUTH_ERROR_MESSAGES } from "./auth.constants";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   updateProfile,
   signOut,
-  UserCredential
+  UserCredential,
 } from "firebase/auth";
 
 interface AuthService {
-  register(email: string, password: string, name: string): Promise<UserCredential>;
+  register(
+    email: string,
+    password: string,
+    name: string
+  ): Promise<UserCredential>;
   login(email: string, password: string): Promise<UserCredential>;
   logout(): Promise<void>;
 }
@@ -33,26 +37,15 @@ class FirebaseAuthService implements AuthService {
 
       return userCredential;
     } catch (error: any) {
-      console.error("Registration error:", error.code);
-      
       switch (error.code) {
         case AUTH_ERROR_CODES.EMAIL_IN_USE:
-          throw new Error(
-            "This email is already registered. Please use a different email."
-          );
+          throw new Error(AUTH_ERROR_MESSAGES.EMAIL_IN_USE);
         case AUTH_ERROR_CODES.WEAK_PASSWORD:
-          throw new Error(
-            "Password is too weak. Please use a stronger password."
-          );
+          throw new Error(AUTH_ERROR_MESSAGES.WEAK_PASSWORD);
         case AUTH_ERROR_CODES.INVALID_EMAIL:
-          throw new Error(
-            "Please provide a valid email address."
-          );
+          throw new Error(AUTH_ERROR_MESSAGES.INVALID_EMAIL);
         default:
-          throw new Error(
-            error.code,
-            error.message || "An error occurred during registration."
-          );
+          throw new Error(AUTH_ERROR_MESSAGES.DEFAULT_REGISTER);
       }
     }
   }
@@ -61,15 +54,10 @@ class FirebaseAuthService implements AuthService {
     try {
       return await signInWithEmailAndPassword(auth, email, password);
     } catch (error: any) {
-      console.error("Login error:", error.code);
-      
       if (error.code === AUTH_ERROR_CODES.INVALID_CREDENTIAL) {
-        throw new Error("Incorrect email or password");
+        throw new Error(AUTH_ERROR_MESSAGES.INVALID_CREDENTIAL);
       }
-      throw new Error(
-        error.code,
-        error.message || "An error occurred during login."
-      );
+      throw new Error(AUTH_ERROR_MESSAGES.DEFAULT_LOGIN);
     }
   }
 
@@ -77,10 +65,7 @@ class FirebaseAuthService implements AuthService {
     try {
       await signOut(auth);
     } catch (error: any) {
-      console.error("Logout error:", error);
-      throw new Error(
-        "An error occurred during logout."
-      );
+      throw new Error(AUTH_ERROR_MESSAGES.DEFAULT_LOGOUT);
     }
   }
 }
